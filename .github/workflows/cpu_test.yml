@@ -8,5 +8,7 @@ jobs:
     steps:
     - name: "Getting the sources"
       uses: actions/checkout@master
-    - name: "Building and testing"
+    - name: "Building the libraries"
+      run: make
+    - name: "Running tests"
       run: make test
