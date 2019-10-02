@@ -1,3 +1,9 @@
+cov_report
+build
+*.gcno
+*.gcda
+*.mk
+
 # Prerequisites
 *.d
 

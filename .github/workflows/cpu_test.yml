@@ -1,0 +1,12 @@
+name: "Testing the CPU stuff"
+on:
+  push:
+    branches: master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: "Getting the sources"
+      uses: actions/checkout@master
+    - name: "Building and testing"
+      run: make test
