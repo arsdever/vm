@@ -5,6 +5,7 @@
 namespace vm
 {
     class RAM;
+    class AbstractInstructionSet;
 
     class AbstractCPU : public CPU
     {
@@ -18,21 +19,20 @@ namespace vm
 
         bool start(bool debug = false) override;
         void tick() override;
-        std::string dump();
         bool isRunning() const override;
+        std::string disassemble() const override;
 
-        int& getInstructionRegister();
-        int& getRegister(unsigned char reg_number);
+        virtual void* getInstructionRegister() const = 0;
+        virtual void* getProgramCounter() const = 0;
+        virtual void* getRegister(unsigned char reg_number) const = 0;
+        virtual AbstractInstructionSet* getInstructionSet() const = 0;
 
     protected:
         virtual void fetch() override;
+        virtual void execute() override;
 
     protected:
         RAM *__ram;
-        int __instruction_register;
-        int __instruction_pointer;
-        int __flags;
-        int *__registers;
         bool __is_running;
         bool __debug_mode;
     };

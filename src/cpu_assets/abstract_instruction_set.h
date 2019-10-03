@@ -13,25 +13,19 @@ namespace vm
         class InstructionExecutor
         {
         public:
-            InstructionExecutor(InstructionExecutor *impl);
+            virtual ~InstructionExecutor() = default;
             
-            virtual void operator() (AbstractCPU &cpu);
-            virtual std::string disassemble(AbstractCPU &cpu) const = 0;
-        
-        private:
-            void updateCPUFlags(AbstractCPU &cpu);
-
-        protected:
-            int __flags;
-            InstructionExecutor *__impl;
+            virtual void execute () const = 0;
+            virtual std::string disassemble() const = 0;
+            virtual int instructionSize() const = 0;
+            virtual int instructionDuration() const = 0;
         };
 
         typedef InstructionExecutor executor_t;
+        typedef std::unordered_map<int, executor_t&> instruction_mapping_t;
 
     public:
-        void execute(AbstractCPU &);
-
-    private:
-        static std::unordered_map<int, executor_t*> s_mapping;
+        virtual void initMapping(AbstractCPU &cpu) = 0;
+        virtual instruction_mapping_t const& getInstructionMapping() const = 0;
     };
 }

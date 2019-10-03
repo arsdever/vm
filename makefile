@@ -9,12 +9,16 @@ export LIB_LIST := cpu_assets
 export LIBS = $(addprefix -l, $(LIB_LIST))
 export RMCMD := rm -fr
 export CPP := g++
-export CPPFLAGS := -g -std=c++14 -lgcov -fprofile-arcs -ftest-coverage -fPIC
+export CPPFLAGS := -g -std=c++14 -lgcov -fprofile-arcs -ftest-coverage -fPIC -DDEBUGGING
 
 .PHONY : build rebuild run clean test create_folders
 
-$(LIB_LIST) build clean run: create_folders
+$(LIB_LIST) build run: create_folders
 	cd $(SRC_DIR); $(MAKE) $(MAKECMDGOALS)
+
+clean:
+	cd $(SRC_DIR); $(MAKE) $(MAKECMDGOALS)
+	cd $(TEST_DIR); $(MAKE) $(MAKECMDGOALS)
 
 test:
 	$(MAKE) $(LIB_LIST)

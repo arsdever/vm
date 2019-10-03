@@ -13,7 +13,11 @@ namespace vm
         virtual bool isRunning() const = 0;
         virtual void tick() = 0;
         virtual RAM* ram() const = 0;
-        virtual std::string dump() = 0;
+        virtual std::string disassemble() const = 0;
+
+#ifdef DEBUGGING
+        virtual std::string dump() const = 0;
+#endif
 
     protected:
         virtual void fetch() = 0;

@@ -1,4 +1,4 @@
-#include "cpu_model.h"
+#include "cpu6502.h"
 #include "ram.h"
 
 extern "C"
@@ -6,6 +6,6 @@ extern "C"
     vm::CPU* getCPUInstance()
     {
         vm::RAM *ram = new vm::RAM(0x7fff);
-        return (vm::CPU*)new vm::CPUModel(ram);
+        return (vm::CPU*)new vm::CPU6502(ram);
     }
 }
