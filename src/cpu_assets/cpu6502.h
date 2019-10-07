@@ -136,6 +136,7 @@ namespace vm
         uint8_t __y_register;
         uint8_t __flags;
         uint8_t __stack_pointer;
+        uint8_t __skip_ticks;
         AbstractInstructionSet::executor_t *__executor;
         std::stack<uint8_t> __stack;
     };

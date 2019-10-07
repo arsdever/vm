@@ -18,6 +18,7 @@ namespace vm
         , __y_register(0)
         , __flags(0)
         , __stack_pointer(0)
+        , __skip_ticks(0)
     {
         __instruction_set->initMapping(*this);
     }
@@ -70,12 +71,16 @@ namespace vm
         unsetFlags(B_FLAG);
         __is_running = true;
         __debug_mode = debug;
+        __skip_ticks = 0;
         return true;
     }
 
     void CPU6502::tick()
     {
         if(!isRunning())
+            return;
+
+        if(__skip_ticks--)
             return;
 
         fetch();
@@ -108,6 +113,7 @@ namespace vm
     void CPU6502::execute()
     {
         __executor->execute();
+        __skip_ticks += __executor->instructionDuration();
     }
 
 #ifdef DEBUGGING
