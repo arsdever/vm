@@ -205,22 +205,26 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, PHA)
     {
-
+        __cpu->__ram->operator[](__cpu->__stack_pointer) = __cpu->__accumulator;
+        __cpu->__stack_pointer -= 1;
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, PHP)
     {
-
+        __cpu->__ram->operator[](__cpu->__stack_pointer) = __cpu->__flags;
+        __cpu->__stack_pointer -= 1;
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, PLA)
     {
-
+        __cpu->__accumulator = __cpu->__ram->operator[](__cpu->__stack_pointer);
+        __cpu->__stack_pointer += 1;
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, PLP)
     {
-
+        __cpu->__flags = __cpu->__ram->operator[](__cpu->__stack_pointer);
+        __cpu->__stack_pointer += 1;
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, ROL)

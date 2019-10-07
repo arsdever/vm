@@ -196,22 +196,22 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, PHA)
     {
-
+        return 3;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, PHP)
     {
-
+        return 3;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, PLA)
     {
-
+        return 4;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, PLP)
     {
-
+        return 4;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, ROL)

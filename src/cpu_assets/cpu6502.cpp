@@ -16,8 +16,8 @@ namespace vm
         , __accumulator(0)
         , __x_register(0)
         , __y_register(0)
-        , __flags(0)
-        , __stack_pointer(0)
+        , __flags(INVALID_FLAG)
+        , __stack_pointer(0x01ff)
         , __skip_ticks(0)
     {
         __instruction_set->initMapping(*this);

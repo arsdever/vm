@@ -96,6 +96,7 @@ namespace vm
         {
             N_FLAG = 0x80,
             V_FLAG = 0x40,
+            INVALID_FLAG = 0x20,
             B_FLAG = 0x10,
             D_FLAG = 0x08,
             I_FLAG = 0x04,

@@ -193,22 +193,22 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, PHA)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, PHP)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, PLA)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, PLP)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ROL)

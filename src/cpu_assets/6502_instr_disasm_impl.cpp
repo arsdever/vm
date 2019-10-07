@@ -206,22 +206,22 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, PHA)
     {
-
+        return "push A";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, PHP)
     {
-
+        return "push SR";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, PLA)
     {
-
+        return "pull A";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, PLP)
     {
-
+        return "pull SR";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, ROL)
