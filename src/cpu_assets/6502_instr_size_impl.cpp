@@ -169,7 +169,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, NOP)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ORA)

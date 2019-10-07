@@ -30,7 +30,7 @@ namespace vm
     std::string CPU6502::disassemble() const
     {
         AbstractInstructionSet::instruction_mapping_t const &mapping = getInstructionSet()->getInstructionMapping();
-        char const &opcode = __ram->operator[](__program_counter);
+        uint8_t const &opcode = __ram->operator[](__program_counter);
         AbstractInstructionSet::instruction_mapping_t::const_iterator exec_iterator = mapping.find(opcode);
         if(exec_iterator == mapping.cend())
             throw InstructionNotFound();
@@ -86,7 +86,7 @@ namespace vm
     void CPU6502::fetch()
     {
         AbstractInstructionSet::instruction_mapping_t const &mapping = getInstructionSet()->getInstructionMapping();
-        char const &opcode = __ram->operator[](__program_counter);
+        uint8_t const &opcode = __ram->operator[](__program_counter);
         AbstractInstructionSet::instruction_mapping_t::const_iterator exec_iterator = mapping.find(opcode);
         if(exec_iterator == mapping.cend())
             throw InstructionNotFound();

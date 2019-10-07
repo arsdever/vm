@@ -169,7 +169,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, NOP)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, ORA)

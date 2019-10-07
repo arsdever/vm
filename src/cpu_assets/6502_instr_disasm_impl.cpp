@@ -184,7 +184,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, NOP)
     {
-
+        return "nop";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, ORA)
