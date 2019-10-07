@@ -174,7 +174,21 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ORA)
     {
-
+        switch(__instruction[0])
+        {
+            case 0x09:
+            case 0x05:
+            case 0x15:
+            case 0x01:
+            case 0x11:
+                return 2;
+            case 0x0d:
+            case 0x1d:
+            case 0x19:
+                return 3;
+            default:
+                return 2;
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, PHA)

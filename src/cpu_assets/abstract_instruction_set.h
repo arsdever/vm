@@ -5,6 +5,7 @@
 
 namespace vm
 {
+    class RAM;
     class AbstractCPU;
 
     class AbstractInstructionSet
@@ -19,6 +20,7 @@ namespace vm
             virtual std::string disassemble() const = 0;
             virtual int instructionSize() const = 0;
             virtual int instructionDuration() const = 0;
+            virtual void fetch(uint64_t pc, RAM *ram) = 0;
         };
 
         typedef InstructionExecutor executor_t;

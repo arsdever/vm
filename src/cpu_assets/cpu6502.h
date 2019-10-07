@@ -5,6 +5,28 @@
 #include "abstract_instructions_impl.h"
 
 #include <stdint.h>
+#include <stack>
+
+#define DECLARE_INSTRUCTION(__cpu__, __instruction__) \
+class Instruction_##__instruction__ : public AbstractInstructionSet::executor_t \
+{ \
+public: \
+    Instruction_##__instruction__() \
+        : __cpu((__cpu__*)((uint64_t)this - (uint64_t)&(((__cpu__*)(0x0))->__instruction__##_impl))) \
+        , __instruction{ 0 } \
+    {} \
+    void execute() const override; \
+    std::string disassemble() const override; \
+    int instructionSize() const override; \
+    int instructionDuration() const override; \
+    void fetch(uint64_t pc, RAM *ram) override; \
+    inline uint8_t opcode() const { return __instruction[0]; } \
+    inline uint8_t operand() const { return __instruction[1]; } \
+    inline uint8_t operand16() const { return (((int16_t)__instruction[2] << 8) & 0xff00) | __instruction[1]; } \
+private: \
+    __cpu__ *__cpu; \
+    uint8_t __instruction[3]; \
+} __instruction__##_impl;
 
 namespace vm
 {
@@ -103,21 +125,22 @@ namespace vm
         void decode() override;
         void execute() override;
 
-        inline void setFlags(int8_t flags, bool state = true);
-        inline void unsetFlags(int8_t flags);
+        inline void setFlags(uint8_t flags, bool state = true);
+        inline void unsetFlags(uint8_t flags);
 
     private:
         AbstractInstructionSet *__instruction_set;
         int16_t __program_counter;
-        int8_t __accumulator;
-        int8_t __x_register;
-        int8_t __y_register;
-        int8_t __flags;
-        int8_t __stack_pointer;
+        uint8_t __accumulator;
+        uint8_t __x_register;
+        uint8_t __y_register;
+        uint8_t __flags;
+        uint8_t __stack_pointer;
         AbstractInstructionSet::executor_t *__executor;
+        std::stack<uint8_t> __stack;
     };
 
-    inline void CPU6502::setFlags(int8_t flags, bool state)
+    inline void CPU6502::setFlags(uint8_t flags, bool state)
     {
         if(state)
             __flags |= flags;
@@ -125,7 +148,7 @@ namespace vm
             __flags &= ~flags;
     }
 
-    inline void CPU6502::unsetFlags(int8_t flags)
+    inline void CPU6502::unsetFlags(uint8_t flags)
     {
         setFlags(flags, false);
     }

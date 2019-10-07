@@ -9,6 +9,7 @@ build: $(LIB_DIR)/libcpu_assets.so
 
 clean: force
 	$(RMCMD) $(LIB_DIR)/libcpu_assets.so
+	$(RMCMD) *.o
 	$(RMCMD) *.mk
 	$(RMCMD) *.gcno
 	$(RMCMD) *.gcda

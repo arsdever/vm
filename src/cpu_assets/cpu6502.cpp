@@ -35,6 +35,7 @@ namespace vm
         if(exec_iterator == mapping.cend())
             throw InstructionNotFound();
 
+        exec_iterator->second.fetch(__program_counter, __ram);
         return exec_iterator->second.disassemble();
     }
 
@@ -83,7 +84,16 @@ namespace vm
     }
 
     void CPU6502::fetch()
-    {}
+    {
+        AbstractInstructionSet::instruction_mapping_t const &mapping = getInstructionSet()->getInstructionMapping();
+        char const &opcode = __ram->operator[](__program_counter);
+        AbstractInstructionSet::instruction_mapping_t::const_iterator exec_iterator = mapping.find(opcode);
+        if(exec_iterator == mapping.cend())
+            throw InstructionNotFound();
+
+        __executor = &exec_iterator->second;
+        __executor->fetch(__program_counter, __ram);
+    }
 
     AbstractInstructionSet* CPU6502::getInstructionSet() const
     {
@@ -92,14 +102,7 @@ namespace vm
 
     void CPU6502::decode()
     {
-        AbstractInstructionSet::instruction_mapping_t const &mapping = getInstructionSet()->getInstructionMapping();
-        char const &opcode = __ram->operator[](__program_counter);
-        AbstractInstructionSet::instruction_mapping_t::const_iterator exec_iterator = mapping.find(opcode);
-        if(exec_iterator == mapping.cend())
-            throw InstructionNotFound();
-
-        __program_counter += exec_iterator->second.instructionSize();
-        __executor = &exec_iterator->second;
+        __program_counter += __executor->instructionSize();
     }
 
     void CPU6502::execute()
@@ -113,11 +116,11 @@ namespace vm
         std::stringstream dump_stm;
         dump_stm << "-[ INFO ]- Dumping 6502 processor state" << std::endl;
         dump_stm << "Program counter:   " << std::bitset<16>(__program_counter ) << std::endl;
-        dump_stm << "Accumulator:       " << std::bitset<8>(*(int8_t*)getRegister(0)) << std::endl;
-        dump_stm << "X register:        " << std::bitset<8>(*(int8_t*)getRegister(1)) << std::endl;
-        dump_stm << "Y register:        " << std::bitset<8>(*(int8_t*)getRegister(2)) << std::endl;
-        dump_stm << "Flag register:     " << std::bitset<8>(*(int8_t*)getRegister(3)) << std::endl;
-        dump_stm << "Stack pointer:     " << std::bitset<8>(*(int8_t*)getRegister(4)) << std::endl;
+        dump_stm << "Accumulator:       " << std::bitset<8>(*(uint8_t*)getRegister(0)) << std::endl;
+        dump_stm << "X register:        " << std::bitset<8>(*(uint8_t*)getRegister(1)) << std::endl;
+        dump_stm << "Y register:        " << std::bitset<8>(*(uint8_t*)getRegister(2)) << std::endl;
+        dump_stm << "Flag register:     " << std::bitset<8>(*(uint8_t*)getRegister(3)) << std::endl;
+        dump_stm << "Stack pointer:     " << std::bitset<8>(*(uint8_t*)getRegister(4)) << std::endl;
         dump_stm << "-[ INFO ]- Processor state dumping completed" << std::endl;
         return dump_stm.str();
     }

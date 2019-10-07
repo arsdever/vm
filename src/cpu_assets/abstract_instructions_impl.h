@@ -17,7 +17,13 @@ private: \
     __cpu__ *__cpu; \
 } __instruction__##_impl;
 
-#define DEFINE_INSTRUCTION_EXECUTOR(__cpu__, __instruction__) \
+#define DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(__cpu__, __instruction__) \
+void __cpu__::Instruction_##__instruction__::fetch(uint64_t pc, RAM *ram) \
+{ \
+    __instruction[0] = ram->operator[]((uint16_t)pc); \
+    __instruction[1] = ram->operator[]((uint16_t)pc + 1); \
+    __instruction[2] = ram->operator[]((uint16_t)pc + 2); \
+} \
 void __cpu__::Instruction_##__instruction__::execute() const
 
 #define DEFINE_INSTRUCTION_DISASSEMBLER(__cpu__, __instruction__) \

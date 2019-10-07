@@ -8,34 +8,36 @@
 int main()
 {
     vm::RAM ram(0x7fff);
-    ram[0] = 0x00;
-    ram[1] = 0x10;
-    ram[2] = 0x00;
-    ram[3] = 0x10;
-    ram[4] = 0x00;
-    ram[5] = 0x10;
-    ram[6] = 0x00;
-    ram[7] = 0x10;
     vm::CPU6502 cpu(&ram);
+    ram[0x00] = 0x09;
+    ram[0x01] = 0xab;
+    ram[0x02] = 0x05;
+    ram[0x03] = 0x10;
+    ram[0x04] = 0x0d;
+    ram[0x05] = 0x11;
+    ram[0x06] = 0x00;
+    ram[0x10] = 0xac;
+    ram[0x11] = 0xad;
     cpu.start();
-    std::cout << cpu.disassemble() << std::endl;
-    cpu.tick();
+    std::cout << "Initial state" << std::endl;
     std::cout << cpu.dump() << std::endl;
-    std::cout << cpu.disassemble() << std::endl;
-    cpu.tick();
-    std::cout << cpu.dump() << std::endl;
-    cpu.start();
-    std::cout << cpu.disassemble() << std::endl;
-    cpu.tick();
-    std::cout << cpu.dump() << std::endl;
-    std::cout << cpu.disassemble() << std::endl;
-    cpu.tick();
-    std::cout << cpu.dump() << std::endl;
-    cpu.start();
-    std::cout << cpu.disassemble() << std::endl;
-    cpu.tick();
-    std::cout << cpu.dump() << std::endl;
-
-    assert(cpu.getRegister(5) == nullptr);
+    while(cpu.isRunning())
+    {
+        std::cout << cpu.disassemble() << std::endl;
+        cpu.tick();
+        std::cout << cpu.dump() << std::endl;
+    }
+    
+    if(!cpu.isRunning() && (*(uint8_t*)cpu.getRegister(3) & cpu.B_FLAG) && (*(uint8_t*)cpu.getRegister(3) & cpu.I_FLAG))
+    {
+        std::cout << "CPU finished the execution, because met BRK command." << std::endl;
+        std::cout << "Test passed" << std::endl;
+    }
+    else
+    {
+        std::cout << "An unknown reason stopped the CPU" << std::endl;
+        std::cout << "Test failed" << std::endl;
+    }
+       
     return 0;
 }

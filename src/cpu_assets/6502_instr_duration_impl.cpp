@@ -174,7 +174,24 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, ORA)
     {
-
+        switch(opcode())
+        {
+            case 0x09:
+                return 2;
+            case 0x05:
+                return 3;
+            case 0x15:
+            case 0x0d:
+            case 0x1d:
+            case 0x19:
+                return 4;
+            case 0x01:
+                return 6;
+            case 0x11:
+                return 5;
+            default:
+                return 2;
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, PHA)

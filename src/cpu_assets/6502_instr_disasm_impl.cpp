@@ -1,7 +1,22 @@
 #include "cpu6502.h"
+#include <sstream>
 
 namespace vm
 {
+    inline std::string uint8_to_hex(uint8_t number)
+    {
+        std::stringstream stm;
+        stm << std::hex << (unsigned)number;
+        return stm.str();
+    }
+
+    inline std::string uint16_to_hex(uint16_t number)
+    {
+        std::stringstream stm;
+        stm << std::hex << number;
+        return stm.str();
+    }
+
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, ADC)
     {
         
@@ -174,7 +189,19 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, ORA)
     {
-
+        std::string command("ora ");
+        switch (opcode())
+        {
+        case 0x09: return command + "#$" + uint8_to_hex(operand());
+        case 0x05: return command + '$' + uint8_to_hex(operand());
+        case 0x15: return command + '$' + uint8_to_hex(operand());
+        case 0x0d: return command + '$' + uint16_to_hex(operand16());
+        case 0x1d: return command + '$' + uint16_to_hex(operand16());
+        case 0x19: return command + '$' + uint16_to_hex(operand16());
+        case 0x01: return command + "($" + uint8_to_hex(operand()) + ", X)";
+        case 0x11: return command + "($" + uint8_to_hex(operand()) + "), Y";
+        default: return command;
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, PHA)
