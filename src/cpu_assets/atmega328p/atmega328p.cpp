@@ -77,17 +77,18 @@ namespace vm
         return true;
     }
 
-    void ATmega328P::tick()
+    int ATmega328P::tick()
     {
         if(!isRunning())
-            return;
+            return 0;
 
         if(__skip_ticks--)
-            return;
+            return __skip_ticks;
 
         fetch();
         decode();
         execute();
+        return __skip_ticks;
     }
 
     void ATmega328P::fetch()

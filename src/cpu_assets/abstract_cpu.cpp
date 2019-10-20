@@ -29,7 +29,7 @@ namespace vm
         return true;
     }
 
-    void AbstractCPU::tick()
+    int AbstractCPU::tick()
     {
         if(__is_running)
         {
@@ -37,6 +37,7 @@ namespace vm
             decode();
             execute();
         }
+        return 0;
     }
 
     bool AbstractCPU::isRunning() const

@@ -75,17 +75,18 @@ namespace vm
         return true;
     }
 
-    void CPU6502::tick()
+    int CPU6502::tick()
     {
         if(!isRunning())
-            return;
+            return 0;
 
-        if(__skip_ticks--)
-            return;
+        if(__skip_ticks)
+            return --__skip_ticks;
 
         fetch();
         decode();
         execute();
+        return __skip_ticks;
     }
 
     void CPU6502::fetch()

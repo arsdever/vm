@@ -18,7 +18,7 @@ namespace vm
         virtual RAM* ram() const override;
 
         bool start(bool debug = false) override;
-        void tick() override;
+        int tick() override;
         bool isRunning() const override;
         std::string disassemble() const override;
 

@@ -22,11 +22,20 @@ int main()
     cpu.start();
     std::cout << "Initial state" << std::endl;
     std::cout << cpu.dump() << std::endl;
+    int clocks = 0;
     while(cpu.isRunning())
     {
         std::cout << cpu.disassemble() << std::endl;
-        cpu.tick();
-        std::cout << cpu.dump() << std::endl;
+        int skip = cpu.tick();
+        std::cout << "Expression takes " << skip << " clocks. Skipping" << std::flush;
+        while (skip > 0)
+        {
+            ++clocks;
+            std::cout << ' ' << skip << std::flush;
+            skip = cpu.tick();
+        }
+        std::cout << std::endl << cpu.dump() << std::endl;
+        std::cout << "--- CLOCK TICKS " << clocks << " ---" << std::endl;
     }
        
     return 0;

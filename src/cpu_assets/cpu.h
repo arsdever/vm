@@ -11,7 +11,7 @@ namespace vm
     public:
         virtual bool start(bool debug = false) = 0;
         virtual bool isRunning() const = 0;
-        virtual void tick() = 0;
+        virtual int tick() = 0;
         virtual RAM* ram() const = 0;
         virtual std::string disassemble() const = 0;
 

@@ -8,7 +8,7 @@ namespace vm
 {
     CPUFactory::CPUFactory()
     {
-        
+
     }
 
     CPUFactory* CPUFactory::factory()
@@ -22,7 +22,8 @@ namespace vm
         switch(opts.cpu_model_uuid)
         {
             case ATmega328P::UUID: return ATmega328P::fromOptions(opts);
-            case CPU6502::UUID: return ATmega328P::fromOptions(opts);
+            case CPU6502::UUID: return CPU6502::fromOptions(opts);
+            default: return nullptr;
         }
     }
 }

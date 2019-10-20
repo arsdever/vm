@@ -6,9 +6,11 @@
 
 #include <stdint.h>
 
+#undef EMPTY
 #define EMPTY \
 { return 0; }
 
+#undef REGISTER_INDEXES
 #define REGISTER_INDEXES \
 { \
     switch(n) \
@@ -41,9 +43,11 @@ private: \
     uint16_t __instruction; \
 } __instruction__##_impl;
 
+#undef DECLARE_INSTRUCTION_DEFAULT
 #define DECLARE_INSTRUCTION_DEFAULT(__cpu__, __instruction__) \
 DECLARE_INSTRUCTION(__cpu__, __instruction__, EMPTY)
 
+#undef DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR
 #define DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(__cpu__, __instruction__) \
 void __cpu__::Instruction_##__instruction__::fetch(uint64_t pc, RAM *ram) \
 { \
@@ -130,7 +134,7 @@ namespace vm
         bool start(bool debug = false) override;
         bool isRunning() const override;
         std::string disassemble() const override;
-        void tick() override;
+        int tick() override;
         inline RAM* ram() const override { return __ram; }
     
     public:
