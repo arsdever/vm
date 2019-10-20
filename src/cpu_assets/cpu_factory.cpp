@@ -1,11 +1,16 @@
 #include "cpu_factory.h"
 
 #include "atmega328p/atmega328p.h"
-#include "cpu6502/cpu6502.h"
+#include "6502/6502.h"
 #include "cpu_opts.h"
 
 namespace vm
 {
+    CPUFactory::CPUFactory()
+    {
+        
+    }
+
     CPUFactory* CPUFactory::factory()
     {
         static CPUFactory s_instance;

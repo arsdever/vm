@@ -12,10 +12,10 @@ export CPP := $(CXX)
 export CPPFLAGS := $(CXXFLAGS)
 
 export INC_DEP_FLAG := -M
-export COMPILE_APP = $(CXX) $(CXXFLAGS) $(LIBS) $(INCLUDES)
-export COMPILE_LIB = $(CXX) -shared $(CXXFLAGS) $(LIBS) $(INCLUDES)
-export COMPILE_OBJECT = $(CXX) -c $(CXXFLAGS) $(LIBS) $(INCLUDES)
-export GET_INCLUDES = $(CXX) $(INC_DEP_FLAG) $(CXXFLAGS) $(INCLUDES)
+export COMPILE_APP = $(CXX) $(CXXFLAGS) $(LIBS)
+export COMPILE_LIB = $(CXX) -shared $(CXXFLAGS) $(LIBS)
+export COMPILE_OBJECT = $(CXX) -c $(CXXFLAGS) $(LIBS)
+export GET_INCLUDES = $(CXX) $(INC_DEP_FLAG) $(CXXFLAGS)
 
 .PHONY : build rebuild run clean test create_folders
 

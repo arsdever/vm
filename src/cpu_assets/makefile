@@ -1,17 +1,17 @@
-DEPS = atmega328p
+DEPS = 6502 atmega328p
 NAME := cpu_assets
-DEPENDENCIES := $(DEPS:%=lib%.so)
 LIB_LIST := $(DEPS:%=-l%)
 SOURCES := $(wildcard *.cpp)
 HEADERS := $(wildcard *.h)
 OBJECTS := $(SOURCES:%.cpp=%.o)
+EXTERNAL_SOURCES = $(foreach dep, $(DEPS), $(notdir $(wildcard $(dep)/*.cpp)))
+EXTERNAL_OBJECTS = $(EXTERNAL_SOURCES:%.cpp=%.o)
 MAKEFILES = $(OBJECTS:%.o=%.mk)
-LIBS := $(addprefix -l, $(DEPS))
 OUTPUT := $(NAME:%=lib%.so)
 LIBSDIR := -L$(LIB_DIR)
 TARGET := $(LIB_DIR)/$(OUTPUT)
 
-.PHONY: build clean force
+.PHONY: build clean force $(DEPS)
 
 build: $(TARGET)
 
@@ -25,11 +25,11 @@ clean: $(DEPS:%=clean_%)
 clean_% : force
 	cd $(@:clean_%=%); $(MAKE) $(MAKECMDGOALS)
 
-$(DEPENDENCIES) :
-	cd $(@:lib%.so=%); $(MAKE) $(MAKECMDGOALS)
+$(DEPS) :
+	cd $@; $(MAKE) $(MAKECMDGOALS)
 
-$(TARGET) : $(OBJECTS) $(DEPENDENCIES)
-	$(COMPILE_LIB) -o $@ $(OBJECTS) $(LIBSDIR) $(LIBS)
+$(TARGET) : $(OBJECTS) $(DEPS)
+	$(COMPILE_LIB) -o $@ $(OBJECTS) $(EXTERNAL_OBJECTS)
 
 $(OBJECTS) : %.o : %.cpp %.mk
 	$(COMPILE_OBJECT) -o $@ $<

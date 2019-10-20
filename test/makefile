@@ -3,9 +3,9 @@
 test: $(TEST_BUILD_DIR)/test
 	LD_LIBRARY_PATH=$(LIB_DIR) $(TEST_BUILD_DIR)/test
 
-$(TEST_BUILD_DIR)/test: *.cpp *.h
+$(TEST_BUILD_DIR)/test: test_6502.cpp
 	mkdir -p $(TEST_BUILD_DIR)
-	g++ *.cpp -o $(TEST_BUILD_DIR)/test -I$(INCLUDES) -L$(LIB_DIR) $(LIBS) -ldl $(CPPFLAGS)
+	g++ $^ -o $(TEST_BUILD_DIR)/test $(INCLUDES) -L$(LIB_DIR) $(LIBS) -ldl $(CPPFLAGS) -lcpu_assets
 
 clean:
 	$(RMCMD) $(TEST_BUILD_DIR)
