@@ -1,4 +1,4 @@
-#include "cpu6502.h"
+#include "6502.h"
 #include <cpu_assets/ram.h>
 
 namespace vm
@@ -192,7 +192,23 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, LDA)
     {
-
+        uint8_t value;
+        switch (opcode())
+        {
+        case 0xa9: value = operand(); break;
+        case 0xa5: value = __cpu->__ram->operator[](operand()); break;
+        case 0xb5: value = __cpu->__ram->operator[](((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0xad: value = __cpu->__ram->operator[](operand16()); break;
+        case 0xbd: value = __cpu->__ram->operator[](operand16() + __cpu->__x_register); break;
+        case 0xb9: value = __cpu->__ram->operator[](operand16() + __cpu->__y_register); break;
+        case 0xa1: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0xb1: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        default:
+            break;
+        }
+        __cpu->__accumulator = value;
+        __cpu->setFlags(Z_FLAG, !__cpu->__accumulator);
+        __cpu->setFlags(N_FLAG, __cpu->__accumulator & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, LDX)

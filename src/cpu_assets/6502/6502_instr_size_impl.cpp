@@ -1,4 +1,4 @@
-#include "cpu6502.h"
+#include "6502.h"
 
 namespace vm
 {

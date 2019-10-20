@@ -1,6 +1,6 @@
-#include "cpu6502.h"
+#include "6502.h"
 #include <exceptions/instruction_not_found_ex.h>
-#include "cpu6502_opts.h"
+#include "6502_opts.h"
 
 #ifdef DEBUGGING
 #include <sstream>

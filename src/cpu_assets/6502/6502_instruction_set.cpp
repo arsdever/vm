@@ -1,5 +1,5 @@
+#include "6502.h"
 #include "6502_instruction_set.h"
-#include "cpu6502.h"
 
 namespace vm
 {
