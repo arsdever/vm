@@ -1,6 +1,8 @@
-#include "cpu6502.h"
-#include "ram.h"
-#include "../exceptions/instruction_not_found_ex.h"
+#include "atmega328p.h"
+#include "atmega328p_instruction_set.h"
+#include <cpu_assets/ram.h>
+#include <exceptions/instruction_not_found_ex.h>
+#include "atmega328p_opts.h"
 
 #ifdef DEBUGGING
 #include <sstream>
@@ -9,26 +11,26 @@
 
 namespace vm
 {
-    CPU6502::CPU6502(RAM *ram)
+    ATmega328P::ATmega328P(RAM *ram)
         : AbstractCPU(ram)
-        , __instruction_set(new InstructionSetFor6502())
+        , __instruction_set(new InstructionSetForATmega328P())
         , __program_counter(0)
         , __accumulator(0)
         , __x_register(0)
         , __y_register(0)
-        , __flags(INVALID_FLAG)
+        , __flags(0)
         , __stack_pointer(0x01ff)
         , __skip_ticks(0)
     {
         __instruction_set->initMapping(*this);
     }
 
-    bool CPU6502::isRunning() const
+    bool ATmega328P::isRunning() const
     {
-        return !(__flags & B_FLAG);
+        return true;
     }
 
-    std::string CPU6502::disassemble() const
+    std::string ATmega328P::disassemble() const
     {
         AbstractInstructionSet::instruction_mapping_t const &mapping = getInstructionSet()->getInstructionMapping();
         uint8_t const &opcode = __ram->operator[](__program_counter);
@@ -40,17 +42,17 @@ namespace vm
         return exec_iterator->second.disassemble();
     }
 
-    void* CPU6502::getInstructionRegister() const
+    void* ATmega328P::getInstructionRegister() const
     {
         return (void*)&(*__ram)[__program_counter];
     }
 
-    void* CPU6502::getProgramCounter() const
+    void* ATmega328P::getProgramCounter() const
     {
         return (void*)&__program_counter;
     }
 
-    void* CPU6502::getRegister(unsigned char reg_number) const
+    void* ATmega328P::getRegister(unsigned char reg_number) const
     {
         switch(reg_number)
         {
@@ -63,19 +65,19 @@ namespace vm
         }
     }
 
-    bool CPU6502::start(bool debug)
+    bool ATmega328P::start(bool debug)
     {
         if(isRunning())
             return false;
 
-        unsetFlags(B_FLAG);
+        unsetFlags(I_FLAG);
         __is_running = true;
         __debug_mode = debug;
         __skip_ticks = 0;
         return true;
     }
 
-    void CPU6502::tick()
+    void ATmega328P::tick()
     {
         if(!isRunning())
             return;
@@ -88,7 +90,7 @@ namespace vm
         execute();
     }
 
-    void CPU6502::fetch()
+    void ATmega328P::fetch()
     {
         AbstractInstructionSet::instruction_mapping_t const &mapping = getInstructionSet()->getInstructionMapping();
         uint8_t const &opcode = __ram->operator[](__program_counter);
@@ -100,24 +102,30 @@ namespace vm
         __executor->fetch(__program_counter, __ram);
     }
 
-    AbstractInstructionSet* CPU6502::getInstructionSet() const
+    AbstractInstructionSet* ATmega328P::getInstructionSet() const
     {
         return __instruction_set;
     }
 
-    void CPU6502::decode()
+    void ATmega328P::decode()
     {
         __program_counter += __executor->instructionSize();
     }
 
-    void CPU6502::execute()
+    void ATmega328P::execute()
     {
         __executor->execute();
         __skip_ticks += __executor->instructionDuration();
     }
 
+    ATmega328P* ATmega328P::fromOptions(CPUOptions const &opts)
+    {
+        ATmega328POptions const &o = reinterpret_cast<ATmega328POptions const &>(opts);
+        return new ATmega328P(new RAM(o.ram_size));
+    }
+
 #ifdef DEBUGGING
-    std::string CPU6502::dump() const
+    std::string ATmega328P::dump() const
     {
         std::stringstream dump_stm;
         dump_stm << "-[ INFO ]- Dumping 6502 processor state" << std::endl;

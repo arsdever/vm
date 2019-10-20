@@ -1,12 +1,13 @@
 #pragma once
 
-#include "abstract_cpu.h"
+#include <cpu_assets/ram.h>
+#include <cpu_assets/abstract_cpu.h>
 #include "6502_instruction_set.h"
-#include "abstract_instructions_impl.h"
+#include <cpu_assets/abstract_instructions_impl.h>
 
 #include <stdint.h>
-#include <stack>
 
+#undef DECLARE_INSTRUCTION
 #define DECLARE_INSTRUCTION(__cpu__, __instruction__) \
 class Instruction_##__instruction__ : public AbstractInstructionSet::executor_t \
 { \
@@ -28,8 +29,19 @@ private: \
     uint8_t __instruction[3]; \
 } __instruction__##_impl;
 
+#define DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(__cpu__, __instruction__) \
+void __cpu__::Instruction_##__instruction__::fetch(uint64_t pc, RAM *ram) \
+{ \
+    __instruction[0] = ram->operator[]((uint16_t)pc); \
+    __instruction[1] = ram->operator[]((uint16_t)pc + 1); \
+    __instruction[2] = ram->operator[]((uint16_t)pc + 2); \
+} \
+DEFINE_INSTRUCTION_EXECUTOR(__cpu__, __instruction__)
+
 namespace vm
 {
+    class CPUOptions;
+
     class CPU6502 : public AbstractCPU
     {
         friend class InstructionSetFor6502;
@@ -116,6 +128,10 @@ namespace vm
         std::string disassemble() const override;
         void tick() override;
         inline RAM* ram() const override { return __ram; }
+    
+    public:
+        static CPU6502* fromOptions(CPUOptions const &opts);
+        static const int UUID = 328;
 
 #ifdef DEBUGGING
         std::string dump() const override;
@@ -130,6 +146,13 @@ namespace vm
         inline void unsetFlags(uint8_t flags);
 
     private:
+        template <typename NUMBER_TYPE>
+        inline void push(NUMBER_TYPE value);
+        
+        template <typename NUMBER_TYPE>
+        inline NUMBER_TYPE pop();
+
+    private:
         AbstractInstructionSet *__instruction_set;
         int16_t __program_counter;
         uint8_t __accumulator;
@@ -139,7 +162,6 @@ namespace vm
         uint8_t __stack_pointer;
         uint8_t __skip_ticks;
         AbstractInstructionSet::executor_t *__executor;
-        std::stack<uint8_t> __stack;
     };
 
     inline void CPU6502::setFlags(uint8_t flags, bool state)
@@ -153,5 +175,34 @@ namespace vm
     inline void CPU6502::unsetFlags(uint8_t flags)
     {
         setFlags(flags, false);
+    }
+
+    template <>
+    inline void CPU6502::push<uint8_t>(uint8_t value)
+    {
+        __ram->operator[](__stack_pointer-- + 0x0100) = value;
+    }
+
+    template <>
+    inline void CPU6502::push<uint16_t>(uint16_t value)
+    {
+        __ram->operator[](__stack_pointer-- + 0x0100) = uint8_t(value & 0xff);
+        __ram->operator[](__stack_pointer-- + 0x0100) = uint8_t(value >> 8 & 0xff);
+    }
+
+    template <>
+    inline uint8_t CPU6502::pop<uint8_t>()
+    {
+        return __ram->operator[](__stack_pointer++ + 0x0100);
+    }
+
+    template <>
+    inline uint16_t CPU6502::pop<uint16_t>()
+    {
+        uint16_t value = 0;
+        value |= __ram->operator[](__stack_pointer++ + 0x0100);
+        value <<= 8;
+        value |= __ram->operator[](__stack_pointer++ + 0x0100);
+        return value;
     }
 }

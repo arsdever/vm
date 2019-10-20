@@ -49,7 +49,13 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BIT)
     {
-
+        std::string command = "bit ";
+        switch (opcode())
+        {
+        case 0x24: return command + "$" + uint8_to_hex(operand());
+        case 0x2c: return command + '$' + uint16_to_hex(operand());
+        default: return command;
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BMI)
@@ -99,7 +105,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CLV)
     {
-
+        return "clv";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CMP)
@@ -236,7 +242,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, RTI)
     {
-
+        return "rti";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, RTS)

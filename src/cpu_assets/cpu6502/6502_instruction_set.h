@@ -1,6 +1,6 @@
 #pragma once
 
-#include "abstract_instruction_set.h"
+#include <cpu_assets/abstract_instruction_set.h>
 
 namespace vm
 {

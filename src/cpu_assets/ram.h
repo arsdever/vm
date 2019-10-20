@@ -21,7 +21,7 @@ namespace vm
         VALUE_TYPE const& operator[] (pos_t pos) const { return (VALUE_TYPE&)__buffer[pos]; }
 
         template <typename VALUE_TYPE = uint8_t>
-        VALUE_TYPE readDataLSB(pos_t pos)
+        inline VALUE_TYPE readDataLSB(pos_t pos)
         {
             VALUE_TYPE result = 0;
             for(int i = 0; i < sizeof(VALUE_TYPE); ++i)
@@ -34,7 +34,7 @@ namespace vm
         }
 
         template <typename VALUE_TYPE = uint8_t>
-        void writeDataLSB(pos_t pos, VALUE_TYPE data)
+        inline void writeDataLSB(pos_t pos, VALUE_TYPE data)
         {
             for(int i = sizeof(VALUE_TYPE) - 1; i >= 0; ++i)
             {

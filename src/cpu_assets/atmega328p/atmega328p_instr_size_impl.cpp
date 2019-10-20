@@ -1,0 +1,239 @@
+#include "atmega328p.h"
+
+namespace vm
+{
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, NOP)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, MOVW)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, MULS)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, FMUL)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, FMULS)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, FMULSU)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, MULSU)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, CPC)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, SBC)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, ADD)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, CPSE)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, CP)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, SUB)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, ADC)
+    {
+        return 2;
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, AND)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, EOR)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, OR)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, MOV)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, CPI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, SBCI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, SUBI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, ORI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, ANDI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, LD)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, LDD)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, ST)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, STD)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, ADIW)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, SBIW)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, CBI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, SBIC)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, SBI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, SBIS)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, MUL)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, IN)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, OUT)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, RJMP)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, RCALL)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, LDI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, BRCS)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, BREQ)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, BRMI)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, BRVS)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, BRLT)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, BRHS)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, BRTS)
+    {
+
+    }
+
+    DEFINE_INSTRUCTION_SIZE(ATmega328P, BRIE)
+    {
+
+    }
+}

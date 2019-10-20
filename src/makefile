@@ -8,8 +8,5 @@ BUILD_SUBDIRS := $(addsuffix _build, $(SUBDIRS))
 build: $(BUILD_SUBDIRS)
 clean: $(CLEAN_SUBDIRS)
 
-run $(LIB_LIST):
-	cd $@; $(MAKE) $(MAKECMDGOALS)
-
 %_clean %_build: %
 	cd $<; $(MAKE) $(MAKECMDGOALS)

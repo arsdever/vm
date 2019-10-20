@@ -34,7 +34,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BIT)
     {
-
+        switch (opcode())
+        {
+        case 0x24: return 3;
+        case 0x2c: return 4;
+        default: return 1;
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BMI)
@@ -84,7 +89,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, CLV)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, CMP)
@@ -174,7 +179,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, ORA)
     {
-        switch(opcode())
+        switch (opcode())
         {
             case 0x09:
                 return 2;
@@ -226,7 +231,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, RTI)
     {
-
+        return 6;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, RTS)

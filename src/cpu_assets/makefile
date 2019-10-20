@@ -1,28 +1,38 @@
+DEPS = atmega328p
+NAME := cpu_assets
+DEPENDENCIES := $(DEPS:%=lib%.so)
+LIB_LIST := $(DEPS:%=-l%)
 SOURCES := $(wildcard *.cpp)
 HEADERS := $(wildcard *.h)
 OBJECTS := $(SOURCES:%.cpp=%.o)
 MAKEFILES = $(OBJECTS:%.o=%.mk)
+LIBS := $(addprefix -l, $(DEPS))
+OUTPUT := $(NAME:%=lib%.so)
+LIBSDIR := -L$(LIB_DIR)
+TARGET := $(LIB_DIR)/$(OUTPUT)
 
-.PHONY: cpu_assets build run clean makefiles force
+.PHONY: build clean force
 
-build: $(LIB_DIR)/libcpu_assets.so
+build: $(TARGET)
 
-clean: force
+clean: $(DEPS:%=clean_%)
 	$(RMCMD) $(LIB_DIR)/libcpu_assets.so
 	$(RMCMD) *.o
 	$(RMCMD) *.mk
 	$(RMCMD) *.gcno
 	$(RMCMD) *.gcda
 
-$(LIB_DIR)/libcpu_assets.so: $(OBJECTS)
-	$(CPP) -o $@ --shared $(OBJECTS) $(CPPFLAGS)
+clean_% : force
+	cd $(@:clean_%=%); $(MAKE) $(MAKECMDGOALS)
 
-%.o:
-	$(CPP) -c -o $@ $(CPPFLAGS) $< -fPIC
+$(DEPENDENCIES) :
+	cd $(@:lib%.so=%); $(MAKE) $(MAKECMDGOALS)
 
-%.mk: %.cpp
-	$(CPP) -M -o $@ $(CPPFLAGS) $<
-	
-.PRECIOUS: %.o
+$(TARGET) : $(OBJECTS) $(DEPENDENCIES)
+	$(COMPILE_LIB) -o $@ $(OBJECTS) $(LIBSDIR) $(LIBS)
 
-include $(MAKEFILES)
+$(OBJECTS) : %.o : %.cpp %.mk
+	$(COMPILE_OBJECT) -o $@ $<
+
+%.mk : %.cpp
+	$(GET_INCLUDES) -o $@ $<

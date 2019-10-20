@@ -4,12 +4,18 @@ export OUT_DIR := $(BASE_DIR)/build
 export LIB_DIR := $(OUT_DIR)/lib
 export TEST_DIR := $(BASE_DIR)/test
 export TEST_BUILD_DIR := $(TEST_DIR)/build
-export INCLUDES := $(SRC_DIR)
+export INCLUDES := -I$(SRC_DIR)
 export LIB_LIST := cpu_assets
-export LIBS = $(addprefix -l, $(LIB_LIST))
 export RMCMD := rm -fr
-export CPP := g++
-export CPPFLAGS := -g -std=c++14 -lgcov -fprofile-arcs -ftest-coverage -fPIC -DDEBUGGING
+export CXXFLAGS = -g -std=c++14 -lgcov -fprofile-arcs -ftest-coverage -fPIC -DDEBUGGING $(INCLUDES) $(LIBSDIR)
+export CPP := $(CXX)
+export CPPFLAGS := $(CXXFLAGS)
+
+export INC_DEP_FLAG := -M
+export COMPILE_APP = $(CXX) $(CXXFLAGS) $(LIBS) $(INCLUDES)
+export COMPILE_LIB = $(CXX) -shared $(CXXFLAGS) $(LIBS) $(INCLUDES)
+export COMPILE_OBJECT = $(CXX) -c $(CXXFLAGS) $(LIBS) $(INCLUDES)
+export GET_INCLUDES = $(CXX) $(INC_DEP_FLAG) $(CXXFLAGS) $(INCLUDES)
 
 .PHONY : build rebuild run clean test create_folders
 

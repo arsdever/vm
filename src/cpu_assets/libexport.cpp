@@ -1,11 +1,11 @@
-#include "cpu6502.h"
+#include "atmega328p/atmega328p.h"
 #include "ram.h"
 
 extern "C"
 {
-    vm::CPU* getCPUInstance()
+    vm::CPU* instantiate(void *options)
     {
         vm::RAM *ram = new vm::RAM(0x7fff);
-        return (vm::CPU*)new vm::CPU6502(ram);
+        return (vm::CPU*)new vm::ATmega328P(ram);
     }
 }

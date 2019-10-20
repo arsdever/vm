@@ -34,7 +34,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, BIT)
     {
-
+        switch (opcode())
+        {
+        case 0x24: return 2;
+        case 0x2c: return 3;
+        default: return 1;
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, BMI)
@@ -84,7 +89,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, CLV)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, CMP)
@@ -174,7 +179,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ORA)
     {
-        switch(__instruction[0])
+        switch (opcode())
         {
             case 0x09:
             case 0x05:
@@ -223,7 +228,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, RTI)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, RTS)

@@ -1,0 +1,243 @@
+#include "atmega328p.h"
+#include <cpu_assets/ram.h>
+#include <bitset>
+
+namespace vm
+{
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, NOP)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, MOVW)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, MULS)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, FMUL)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, FMULS)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, FMULSU)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, MULSU)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, CPC)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, SBC)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, ADD)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, CPSE)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, CP)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, SUB)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, ADC)
+    {
+        uint8_t rx = *(uint8_t*)__cpu->getRegister(operand(0));
+        uint8_t ry = *(uint8_t*)__cpu->getRegister(operand(1));
+        *(uint8_t*)__cpu->getRegister(operand(1)) = uint8_t((uint16_t)rx + ry);
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, AND)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, EOR)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, OR)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, MOV)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, CPI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, SBCI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, SUBI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, ORI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, ANDI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, LD)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, LDD)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, ST)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, STD)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, ADIW)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, SBIW)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, CBI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, SBIC)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, SBI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, SBIS)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, MUL)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, IN)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, OUT)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, RJMP)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, RCALL)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, LDI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, BRCS)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, BREQ)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, BRMI)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, BRVS)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, BRLT)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, BRHS)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, BRTS)
+    {
+        
+    }
+
+    DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(ATmega328P, BRIE)
+    {
+        
+    }
+}
