@@ -1,5 +1,6 @@
 #include "6502.h"
 #include <cpu_assets/ram.h>
+#include <assert.h>
 
 namespace vm
 {
@@ -16,29 +17,32 @@ namespace vm
         case 0x79: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__y_register); break;
         case 0x61: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
         case 0x71: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
-        default:
-            break;
+        default: assert("Mustn't reach the statement");
         }
         int16_t result = (int16_t)__cpu->__accumulator + value + bool(__cpu->__flags & Z_FLAG);
-        if(result == 0)
-            __cpu->setFlags(Z_FLAG);
-        else
-            __cpu->unsetFlags(Z_FLAG);
-
-        if(result & 0x0100)
-            __cpu->setFlags(C_FLAG);
-        else
-            __cpu->unsetFlags(C_FLAG);
-
-        if(result & 0x80)
-            __cpu->setFlags(N_FLAG);
-        else
-            __cpu->unsetFlags(N_FLAG);
+        __cpu->setFlags(Z_FLAG, !result);
+        __cpu->setFlags(C_FLAG, result & 0x0100);
+        __cpu->setFlags(N_FLAG, result & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, AND)
     {
-
+        int8_t value;
+        switch (opcode())
+        {
+        case 0x29: value = (int8_t)operand(); break;
+        case 0x25: value = __cpu->__ram->operator[]<int8_t>(operand()); break;
+        case 0x35: value = __cpu->__ram->operator[]<int8_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0x2d: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
+        case 0x3d: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
+        case 0x39: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__y_register); break;
+        case 0x21: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0x31: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->__accumulator = (int16_t)__cpu->__accumulator & value;
+        __cpu->setFlags(Z_FLAG, !__cpu->__accumulator);
+        __cpu->setFlags(N_FLAG, __cpu->__accumulator & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, ASL)
@@ -68,8 +72,7 @@ namespace vm
         {
         case 0x24: value = __cpu->__ram->operator[](operand()); break;
         case 0x2c: value = __cpu->__ram->operator[](operand16()); break;
-        default:
-            break;
+        default: assert("Mustn't reach the statement");
         }
         __cpu->setFlags(N_FLAG, value & 0x80);
         __cpu->setFlags(V_FLAG, value & 0x40);
@@ -203,8 +206,7 @@ namespace vm
         case 0xb9: value = __cpu->__ram->operator[](operand16() + __cpu->__y_register); break;
         case 0xa1: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
         case 0xb1: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
-        default:
-            break;
+        default: assert("Mustn't reach the statement");
         }
         __cpu->__accumulator = value;
         __cpu->setFlags(Z_FLAG, !__cpu->__accumulator);
@@ -213,17 +215,57 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, LDX)
     {
-
+        uint8_t value;
+        switch (opcode())
+        {
+        case 0xa2: value = operand(); break;
+        case 0xa6: value = __cpu->__ram->operator[](operand()); break;
+        case 0xb6: value = __cpu->__ram->operator[](((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0xae: value = __cpu->__ram->operator[](operand16()); break;
+        case 0xbe: value = __cpu->__ram->operator[](operand16() + __cpu->__x_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->__x_register = value;
+        __cpu->setFlags(Z_FLAG, !__cpu->__x_register);
+        __cpu->setFlags(N_FLAG, __cpu->__x_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, LDY)
     {
-
+        uint8_t value;
+        switch (opcode())
+        {
+        case 0xa0: value = operand(); break;
+        case 0xa4: value = __cpu->__ram->operator[](operand()); break;
+        case 0xb4: value = __cpu->__ram->operator[](((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0xac: value = __cpu->__ram->operator[](operand16()); break;
+        case 0xbc: value = __cpu->__ram->operator[](operand16() + __cpu->__x_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->__y_register = value;
+        __cpu->setFlags(Z_FLAG, !__cpu->__y_register);
+        __cpu->setFlags(N_FLAG, __cpu->__y_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, LSR)
     {
-
+        uint16_t address;
+        switch (opcode())
+        {
+        case 0x4a:
+            __cpu->setFlags(C_FLAG, __cpu->__accumulator & 0x01);
+            __cpu->setFlags(Z_FLAG, !(__cpu->__accumulator >>= 1));
+            __cpu->unsetFlags(N_FLAG);
+            return;
+        case 0xa4: address = operand(); break;
+        case 0xb4: address = ((uint16_t)operand() + __cpu->__x_register) & 0xff; break;
+        case 0xac: address = operand16(); break;
+        case 0xbc: address = operand16() + __cpu->__x_register; break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->setFlags(C_FLAG, __cpu->__ram->operator[](address) & 0x01);
+        __cpu->setFlags(Z_FLAG, !(__cpu->__ram->operator[](address) >>= 1));
+        __cpu->unsetFlags(N_FLAG);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, NOP)
@@ -244,8 +286,7 @@ namespace vm
         case 0x19: value = __cpu->__ram->operator[](operand16() + __cpu->__y_register); break;
         case 0x01: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
         case 0x11: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
-        default:
-            break;
+        default: assert("Mustn't reach the statement");
         }
         __cpu->__accumulator |= value;
         if((int8_t)__cpu->__accumulator == 0)

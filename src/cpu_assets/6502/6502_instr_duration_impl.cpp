@@ -1,4 +1,5 @@
 #include "6502.h"
+#include <assert.h>
 
 namespace vm
 {
@@ -9,7 +10,18 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, AND)
     {
-
+        switch (opcode())
+        {
+            case 0x29: return 2;
+            case 0x25: return 3;
+            case 0x35:
+            case 0x2d:
+            case 0x3d:
+            case 0x39: return 4;
+            case 0x21: return 6;
+            case 0x31: return 5;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, ASL)
@@ -38,7 +50,7 @@ namespace vm
         {
         case 0x24: return 3;
         case 0x2c: return 4;
-        default: return 1;
+        default: assert("Mustn't reach the statement");
         }
     }
 
@@ -154,22 +166,57 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, LDA)
     {
-
+        switch (opcode())
+        {
+            case 0xa9: return 2;
+            case 0xa5: return 3;
+            case 0xb5:
+            case 0xad:
+            case 0xbd:
+            case 0xb9: return 4;
+            case 0xa1: return 6;
+            case 0xb1: return 5;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, LDX)
     {
-
+        switch (opcode())
+        {
+            case 0xa2: return 2;
+            case 0xa6: return 3;
+            case 0xb6:
+            case 0xae:
+            case 0xbe: return 4;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, LDY)
     {
-
+        switch (opcode())
+        {
+            case 0xa0: return 2;
+            case 0xa4: return 3;
+            case 0xb4:
+            case 0xac:
+            case 0xbc: return 4;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, LSR)
     {
-
+        switch (opcode())
+        {
+            case 0x4a: return 2;
+            case 0x46: return 5;
+            case 0x56:
+            case 0x4e: return 6;
+            case 0x5e: return 7;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, NOP)
@@ -181,21 +228,15 @@ namespace vm
     {
         switch (opcode())
         {
-            case 0x09:
-                return 2;
-            case 0x05:
-                return 3;
+            case 0x09: return 2;
+            case 0x05: return 3;
             case 0x15:
             case 0x0d:
             case 0x1d:
-            case 0x19:
-                return 4;
-            case 0x01:
-                return 6;
-            case 0x11:
-                return 5;
-            default:
-                return 2;
+            case 0x19: return 4;
+            case 0x01: return 6;
+            case 0x11: return 5;
+            default: assert("Mustn't reach the statement");
         }
     }
 

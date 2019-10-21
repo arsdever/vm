@@ -1,4 +1,5 @@
 #include "6502.h"
+#include <assert.h>
 
 namespace vm
 {
@@ -9,7 +10,18 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, AND)
     {
-
+        switch (opcode())
+        {
+            case 0x29:
+            case 0x25:
+            case 0x35: return 2;
+            case 0x2d:
+            case 0x3d:
+            case 0x39: return 3;
+            case 0x21:
+            case 0x31: return 2;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ASL)
@@ -38,7 +50,7 @@ namespace vm
         {
         case 0x24: return 2;
         case 0x2c: return 3;
-        default: return 1;
+        default: assert("Mustn't reach the statement");
         }
     }
 
@@ -154,22 +166,57 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, LDA)
     {
-
+        switch (opcode())
+        {
+            case 0xa9:
+            case 0xa5:
+            case 0xb5: return 2;
+            case 0xad:
+            case 0xbd:
+            case 0xb9: return 3;
+            case 0xa1:
+            case 0xb1: return 2;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, LDX)
     {
-
+        switch (opcode())
+        {
+            case 0xa2:
+            case 0xa6:
+            case 0xb6: return 2;
+            case 0xae:
+            case 0xbe: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, LDY)
     {
-
+        switch (opcode())
+        {
+            case 0xa0:
+            case 0xa4:
+            case 0xb4: return 2;
+            case 0xac:
+            case 0xbc: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, LSR)
     {
-
+        switch (opcode())
+        {
+            case 0x4a: return 1;
+            case 0x46:
+            case 0x56: return 2;
+            case 0x4e:
+            case 0x5e: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, NOP)
@@ -185,14 +232,11 @@ namespace vm
             case 0x05:
             case 0x15:
             case 0x01:
-            case 0x11:
-                return 2;
+            case 0x11: return 2;
             case 0x0d:
             case 0x1d:
-            case 0x19:
-                return 3;
-            default:
-                return 2;
+            case 0x19: return 3;
+            default: assert("Mustn't reach the statement");
         }
     }
 
