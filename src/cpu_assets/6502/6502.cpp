@@ -124,16 +124,37 @@ namespace vm
 
 
 #ifdef DEBUGGING
+    static const char chars[] = "0123456789abcdef";
+    std::string tostr(uint8_t num)
+    {
+        return std::string("0x") +
+            chars[(num >> 4) & 0x0f] +
+            chars[num & 0x0f];
+    }
+    std::string tostr(int8_t num) { return tostr(uint8_t(num));}
+
+    std::string tostr(uint16_t num)
+    {
+        return std::string("0x") +
+            chars[(num >> 12) & 0x0f] +
+            chars[(num >> 8) & 0x0f] +
+            chars[(num >> 4) & 0x0f] +
+            chars[num & 0x0f];
+    }
+    std::string tostr(int16_t num) { return tostr(uint16_t(num));}
+
     std::string CPU6502::dump() const
     {
         std::stringstream dump_stm;
-        dump_stm << "-[ INFO ]- Dumping 6502 processor state" << std::endl;
-        dump_stm << "Program counter:   " << std::bitset<16>(__program_counter ) << std::endl;
-        dump_stm << "Accumulator:       " << std::bitset<8>(*(uint8_t*)getRegister(0)) << std::endl;
-        dump_stm << "X register:        " << std::bitset<8>(*(uint8_t*)getRegister(1)) << std::endl;
-        dump_stm << "Y register:        " << std::bitset<8>(*(uint8_t*)getRegister(2)) << std::endl;
-        dump_stm << "Flag register:     " << std::bitset<8>(*(uint8_t*)getRegister(3)) << std::endl;
-        dump_stm << "Stack pointer:     " << std::bitset<8>(*(uint8_t*)getRegister(4)) << std::endl;
+        dump_stm << "-[ INFO ]- Dumping 6502 processor state" << std::endl << std::endl;
+        dump_stm << "Program counter:   " << tostr(__program_counter ) << std::endl;
+        dump_stm << "Accumulator:       " << tostr(*(uint8_t*)getRegister(0)) << std::endl;
+        dump_stm << "X register:        " << tostr(*(uint8_t*)getRegister(1)) << std::endl;
+        dump_stm << "Y register:        " << tostr(*(uint8_t*)getRegister(2)) << std::endl;
+        dump_stm << "Status register:   " << tostr(*(uint8_t*)getRegister(3)) << std::endl;
+        dump_stm << "Stack pointer:     " << tostr(*(uint8_t*)getRegister(4)) << std::endl;
+        dump_stm << "Flag register:     NV-BDIZC" << std::endl;
+        dump_stm << "             :     " << std::bitset<8>(*(uint8_t*)getRegister(3)) << std::endl;
         dump_stm << "-[ INFO ]- Processor state dumping completed" << std::endl;
         return dump_stm.str();
     }

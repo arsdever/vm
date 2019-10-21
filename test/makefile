@@ -1,7 +1,7 @@
 .PHONY: build clean test
 
 test: $(TEST_BUILD_DIR)/test
-	LD_LIBRARY_PATH=$(LIB_DIR) $(TEST_BUILD_DIR)/test
+	cd $(TEST_DIR); LD_LIBRARY_PATH=$(LIB_DIR) $(TEST_BUILD_DIR)/test; cd -
 
 $(TEST_BUILD_DIR)/test: test_6502.cpp
 	mkdir -p $(TEST_BUILD_DIR)

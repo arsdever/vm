@@ -1,3 +1,4 @@
+#include <fstream>
 #include <iostream>
 
 #include <cpu_assets/6502/6502.h>
@@ -9,16 +10,25 @@ int main()
 {
     vm::RAM ram(0x7fff);
     vm::CPU6502 cpu(&ram);
-    ram[0x00] = 0x09;
-    ram[0x01] = 0xab;
-    ram[0x02] = 0x05;
-    ram[0x03] = 0x10;
-    ram[0x04] = 0x0d;
-    ram[0x05] = 0x11;
-    ram[0x07] = 0xea;
-    ram[0x06] = 0x00;
-    ram[0x10] = 0xac;
-    ram[0x11] = 0xad;
+    std::ifstream ramfile;
+    ramfile.open("ram_model.ram", std::ios::binary | std::ios::in);
+    if(!ramfile.is_open())
+    {
+        std::cerr << "Cannot load RAM model: Cannot open file ram_model.ram." << std::endl;
+        return 1;
+    }
+    
+    int i = 0;
+    while(!ramfile.eof())
+    {
+        if(i >= 0x8000)
+        {
+            std::cerr << "Cannot load RAM model: Model size is bigger than the RAM is." << std::endl;
+            return 1;            
+        }
+        ramfile >> ram[i++];
+    }
+
     cpu.start();
     std::cout << "Initial state" << std::endl;
     std::cout << cpu.dump() << std::endl;
