@@ -47,22 +47,41 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, ASL)
     {
-
+        uint16_t address;
+        switch (opcode())
+        {
+        case 0x0a:
+            __cpu->setFlags(C_FLAG, __cpu->__accumulator & 0x80);
+            __cpu->setFlags(Z_FLAG, !(__cpu->__accumulator <<= 1));
+            __cpu->setFlags(N_FLAG, __cpu->__accumulator & 0x01);
+            return;
+        case 0x06: address = operand(); break;
+        case 0x16: address = ((uint16_t)operand() + __cpu->__x_register) & 0xff; break;
+        case 0x0e: address = operand16(); break;
+        case 0x1e: address = operand16() + __cpu->__x_register; break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->setFlags(C_FLAG, __cpu->__ram->operator[](address) & 0x80);
+        __cpu->setFlags(Z_FLAG, !(__cpu->__ram->operator[](address) <<= 1));
+        __cpu->setFlags(N_FLAG, __cpu->__ram->operator[](address) & 0x01);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BCC)
     {
-
+        if(!(__cpu->__flags & CPU6502::C_FLAG))
+            __cpu->__program_counter += (int8_t) operand();
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BCS)
     {
-
+        if(__cpu->__flags & CPU6502::C_FLAG)
+            __cpu->__program_counter += (int8_t) operand();
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BEQ)
     {
-
+        if(__cpu->__flags & CPU6502::Z_FLAG)
+            __cpu->__program_counter += (int8_t) operand();
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BIT)
@@ -81,12 +100,14 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BMI)
     {
-
+        if(__cpu->__flags & CPU6502::N_FLAG)
+            __cpu->__program_counter += (int8_t) operand();
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BNE)
     {
-
+        if(!(__cpu->__flags & CPU6502::Z_FLAG))
+            __cpu->__program_counter += (int8_t) operand();
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BPL)
@@ -105,27 +126,29 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BVC)
     {
-
+        if(!(__cpu->__flags & CPU6502::V_FLAG))
+            __cpu->__program_counter += (int8_t) operand();
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BVS)
     {
-
+        if(__cpu->__flags & CPU6502::V_FLAG)
+            __cpu->__program_counter += (int8_t) operand();
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, CLC)
     {
-
+        __cpu->unsetFlags(C_FLAG);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, CLD)
     {
-
+        __cpu->unsetFlags(D_FLAG);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, CLI)
     {
-
+        __cpu->unsetFlags(I_FLAG);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, CLV)

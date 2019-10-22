@@ -60,7 +60,7 @@ Branch on Carry Clear
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
-| elative    | BCC oper  | 90  |   2   |   2*  |
+| relative    | BCC oper  | 90  |   2   |   2*  |
 
 ## BCS
 
@@ -71,7 +71,7 @@ Branch on Carry Set
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
-| elative    | BCS oper  | B0  |   2   |   2*  |
+| relative    | BCS oper  | B0  |   2   |   2*  |
 
 ## BEQ
 
@@ -82,7 +82,7 @@ Branch on Result Zero
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
-| elative    | BEQ oper  | F0  |   2   |   2*  |
+| relative    | BEQ oper  | F0  |   2   |   2*  |
 
 ## BIT
 
@@ -108,7 +108,7 @@ Branch on Result Minus
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
-| elative    | BMI oper  | 30  |   2   |   2*  |
+| relative    | BMI oper  | 30  |   2   |   2*  |
 
 ## BNE
 
@@ -119,7 +119,7 @@ Branch on Result not Zero
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
-| elative    | BNE oper  | D0  |   2   |   2*  |
+| relative    | BNE oper  | D0  |   2   |   2*  |
 
 ## BPL
 
@@ -130,7 +130,7 @@ Branch on Result Plus
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
-| elative    | BPL oper  | 10  |   2   |   2*  |
+| relative    | BPL oper  | 10  |   2   |   2*  |
 
 ## BRK
 
@@ -152,7 +152,7 @@ Branch on Overflow Clear
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
-| elative    | BVC oper  | 50  |   2   |   2*  |
+| relative    | BVC oper  | 50  |   2   |   2*  |
 
 ## BVS
 
@@ -163,7 +163,7 @@ Branch on Overflow Set
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
-| elative    | BVC oper  | 70  |   2   |   2*  |
+| relative    | BVC oper  | 70  |   2   |   2*  |
 
 ## CLC
 

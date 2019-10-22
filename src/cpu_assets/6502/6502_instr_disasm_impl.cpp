@@ -42,22 +42,31 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, ASL)
     {
-
+        std::string command("asl ");
+        switch (opcode())
+        {
+        case 0x0a: return command + "a";
+        case 0x06: return command + '$' + uint8_to_hex(operand());
+        case 0x16: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0x0e: return command + '$' + uint16_to_hex(operand16());
+        case 0x1e: return command + '$' + uint16_to_hex(operand16()) + ", x";
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BCC)
     {
-
+        return "bcc";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BCS)
     {
-
+        return "bcs";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BEQ)
     {
-
+        return "beq";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BIT)
@@ -73,12 +82,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BMI)
     {
-
+        return "bmi";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BNE)
     {
-
+        return "bne";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BPL)
@@ -93,27 +102,27 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BVC)
     {
-
+        return "bvc";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, BVS)
     {
-
+        return "bvs";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CLC)
     {
-
+        return "clc";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CLD)
     {
-
+        return "cld";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CLI)
     {
-
+        return "cli";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CLV)

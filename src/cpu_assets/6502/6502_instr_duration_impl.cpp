@@ -26,22 +26,30 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, ASL)
     {
-
+        switch (opcode())
+        {
+            case 0x0a: return 2;
+            case 0x06: return 5;
+            case 0x16:
+            case 0x0e: return 6;
+            case 0x1e: return 7;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BCC)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BCS)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BEQ)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BIT)
@@ -56,12 +64,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BMI)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BNE)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BPL)
@@ -76,27 +84,27 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BVC)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, BVS)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, CLC)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, CLD)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, CLI)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, CLV)
