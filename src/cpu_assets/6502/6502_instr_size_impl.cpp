@@ -164,12 +164,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, DEX)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, DEY)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, EOR)
@@ -191,12 +191,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, INX)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, INY)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, JMP)

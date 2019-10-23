@@ -161,7 +161,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CPY)
     {
-        std::string command("cpx ");
+        std::string command("cpy ");
         switch (opcode())
         {
         case 0xc0: return command + "#$" + uint8_to_hex(operand());
@@ -173,7 +173,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, DEC)
     {
-        std::string command("cpx ");
+        std::string command("inc ");
         switch (opcode())
         {
         case 0xc6: return command + "$" + uint8_to_hex(operand());
@@ -186,12 +186,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, DEX)
     {
-
+        return "dec";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, DEY)
     {
-
+        return "dec";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, EOR)
@@ -201,7 +201,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, INC)
     {
-        std::string command("cpx ");
+        std::string command("inc ");
         switch (opcode())
         {
         case 0xe6: return command + "$" + uint8_to_hex(operand());
@@ -214,12 +214,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, INX)
     {
-
+        return "inc";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, INY)
     {
-
+        return "inc";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, JMP)

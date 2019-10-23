@@ -224,12 +224,16 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, DEX)
     {
-
+        --__cpu->__x_register;
+        __cpu->setFlags(Z_FLAG, !__cpu->__x_register);
+        __cpu->setFlags(N_FLAG, __cpu->__x_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, DEY)
     {
-
+        --__cpu->__y_register;
+        __cpu->setFlags(Z_FLAG, !__cpu->__y_register);
+        __cpu->setFlags(N_FLAG, __cpu->__y_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, EOR)
@@ -255,12 +259,16 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, INX)
     {
-
+        ++__cpu->__x_register;
+        __cpu->setFlags(Z_FLAG, !__cpu->__x_register);
+        __cpu->setFlags(N_FLAG, __cpu->__x_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, INY)
     {
-
+        ++__cpu->__y_register;
+        __cpu->setFlags(Z_FLAG, !__cpu->__y_register);
+        __cpu->setFlags(N_FLAG, __cpu->__y_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, JMP)
