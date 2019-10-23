@@ -201,12 +201,12 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, JMP)
     {
-
+        return 3;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, JSR)
     {
-
+        return 3;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, LDA)

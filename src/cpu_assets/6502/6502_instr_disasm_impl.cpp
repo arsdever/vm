@@ -224,12 +224,18 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, JMP)
     {
-
+        std::string command("jmp ");
+        switch (opcode())
+        {
+        case 0x4c: return command + "$" + uint16_to_hex(operand16());
+        case 0x6c: return command + "($" + uint16_to_hex(operand16()) + ')';
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, JSR)
     {
-
+        return std::string("jsr") + uint16_to_hex(operand16());
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, LDA)

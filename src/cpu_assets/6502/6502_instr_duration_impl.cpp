@@ -201,12 +201,17 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, JMP)
     {
-
+        switch (opcode())
+        {
+            case 0x4c: return 3;
+            case 0x6c: return 5;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, JSR)
     {
-
+        return 6;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, LDA)

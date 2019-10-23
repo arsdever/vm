@@ -273,12 +273,25 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, JMP)
     {
-
+        uint8_t address;
+        switch (opcode())
+        {
+        case 0x4c: address = operand16(); break;
+        case 0x6c: address = (__cpu->__ram->operator[](operand16()) << 8) | __cpu->__ram->operator[](operand16()); break;
+        }
+        __cpu->__program_counter = address;
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, JSR)
     {
-
+        uint8_t address;
+        switch (opcode())
+        {
+        case 0x4c: address = operand16(); break;
+        case 0x6c: address = (__cpu->__ram->operator[](operand16()) << 8) | __cpu->__ram->operator[](operand16()); break;
+        }
+        __cpu->push(__cpu->__program_counter + 2);
+        __cpu->__program_counter = address;
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, LDA)
