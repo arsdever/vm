@@ -178,12 +178,32 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, CPX)
     {
-
+        int8_t value;
+        switch (opcode())
+        {
+        case 0xe0: value = (int8_t)operand(); break;
+        case 0xe4: value = __cpu->__ram->operator[]<int8_t>(operand()); break;
+        case 0xec: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->setFlags(C_FLAG, __cpu->__x_register >= value);
+        __cpu->setFlags(Z_FLAG, __cpu->__x_register == value);
+        __cpu->setFlags(N_FLAG, __cpu->__x_register < value);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, CPY)
     {
-
+        int8_t value;
+        switch (opcode())
+        {
+        case 0xc0: value = (int8_t)operand(); break;
+        case 0xc4: value = __cpu->__ram->operator[]<int8_t>(operand()); break;
+        case 0xcc: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->setFlags(C_FLAG, __cpu->__y_register >= value);
+        __cpu->setFlags(Z_FLAG, __cpu->__y_register == value);
+        __cpu->setFlags(N_FLAG, __cpu->__y_register < value);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, DEC)

@@ -130,12 +130,24 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, CPX)
     {
-
+        switch (opcode())
+        {
+            case 0xe0:
+            case 0xe4: return 2;
+            case 0xec: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, CPY)
     {
-
+        switch (opcode())
+        {
+            case 0xc0:
+            case 0xc4: return 2;
+            case 0xcc: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, DEC)

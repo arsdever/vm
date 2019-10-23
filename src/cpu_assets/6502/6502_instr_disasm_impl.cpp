@@ -149,12 +149,26 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CPX)
     {
-
+        std::string command("cpx ");
+        switch (opcode())
+        {
+        case 0xe0: return command + "#$" + uint8_to_hex(operand());
+        case 0xe4: return command + '$' + uint8_to_hex(operand());
+        case 0xec: return command + '$' + uint16_to_hex(operand16());
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CPY)
     {
-
+        std::string command("cpx ");
+        switch (opcode())
+        {
+        case 0xc0: return command + "#$" + uint8_to_hex(operand());
+        case 0xc4: return command + '$' + uint8_to_hex(operand());
+        case 0xcc: return command + '$' + uint16_to_hex(operand16());
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, DEC)
