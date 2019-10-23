@@ -435,12 +435,44 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, ROL)
     {
-
+        uint8_t *value_p;
+        switch (opcode())
+        {
+        case 0x2a: value_p = &__cpu->__accumulator; break;
+        case 0x26: value_p = &__cpu->__ram->operator[](operand()); break;
+        case 0x36: value_p = &__cpu->__ram->operator[](((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0x2e: value_p = &__cpu->__ram->operator[](operand16()); break;
+        case 0x3e: value_p = &__cpu->__ram->operator[](operand16() + __cpu->__x_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        uint8_t &value = *value_p;
+        uint8_t cf = __cpu->__flags & C_FLAG;
+        __cpu->setFlags(C_FLAG, value & 0x80);
+        value <<= 1;
+        if (cf) value |= 0x01; else value &= ~0x01;
+        __cpu->setFlags(Z_FLAG, !value);
+        __cpu->setFlags(N_FLAG, value & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, ROR)
     {
-
+        uint8_t *value_p;
+        switch (opcode())
+        {
+        case 0x6a: value_p = &__cpu->__accumulator; break;
+        case 0x66: value_p = &__cpu->__ram->operator[](operand()); break;
+        case 0x76: value_p = &__cpu->__ram->operator[](((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0x6e: value_p = &__cpu->__ram->operator[](operand16()); break;
+        case 0x7e: value_p = &__cpu->__ram->operator[](operand16() + __cpu->__x_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        uint8_t &value = *value_p;
+        uint8_t cf = __cpu->__flags & C_FLAG;
+        __cpu->setFlags(C_FLAG, value & 0x80);
+        value >>= 1;
+        if (cf) value |= 0x80; else value &= ~0x80;
+        __cpu->setFlags(Z_FLAG, !value);
+        __cpu->setFlags(N_FLAG, value & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, RTI)

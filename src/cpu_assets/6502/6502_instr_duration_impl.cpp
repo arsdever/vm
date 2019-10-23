@@ -323,12 +323,28 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, ROL)
     {
-
+        switch (opcode())
+        {
+            case 0x2a: return 2;
+            case 0x26: return 5;
+            case 0x36:
+            case 0x2e: return 6;
+            case 0x3e: return 7;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, ROR)
     {
-
+        switch (opcode())
+        {
+            case 0x6a: return 2;
+            case 0x66: return 5;
+            case 0x76:
+            case 0x6e: return 6;
+            case 0x7e: return 7;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, RTI)

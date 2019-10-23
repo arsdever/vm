@@ -318,12 +318,28 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ROL)
     {
-
+        switch (opcode())
+        {
+            case 0x2a: return 1;
+            case 0x26:
+            case 0x36: return 2;
+            case 0x2e:
+            case 0x3e: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ROR)
     {
-
+        switch (opcode())
+        {
+            case 0x6a: return 1;
+            case 0x66:
+            case 0x76: return 2;
+            case 0x6e:
+            case 0x7e: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, RTI)

@@ -353,12 +353,30 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, ROL)
     {
-
+        std::string command("rol ");
+        switch (opcode())
+        {
+        case 0x2a: return command + "a";
+        case 0x26: return command + '$' + uint8_to_hex(operand());
+        case 0x36: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0x2e: return command + '$' + uint16_to_hex(operand16());
+        case 0x3e: return command + '$' + uint16_to_hex(operand16()) + ", x";
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, ROR)
     {
-
+        std::string command("ror ");
+        switch (opcode())
+        {
+        case 0x6a: return command + "a";
+        case 0x66: return command + '$' + uint8_to_hex(operand());
+        case 0x76: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0x6e: return command + '$' + uint16_to_hex(operand16());
+        case 0x7e: return command + '$' + uint16_to_hex(operand16()) + ", x";
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, RTI)
