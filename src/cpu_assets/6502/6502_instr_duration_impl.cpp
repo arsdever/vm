@@ -174,7 +174,18 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, EOR)
     {
-
+        switch (opcode())
+        {
+            case 0x49: return 2;
+            case 0x45: return 3;
+            case 0x55:
+            case 0x4d:
+            case 0x5d:
+            case 0x59: return 4;
+            case 0x41: return 6;
+            case 0x51: return 5;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, INC)

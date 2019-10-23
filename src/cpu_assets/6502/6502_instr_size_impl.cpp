@@ -174,7 +174,18 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, EOR)
     {
-
+        switch (opcode())
+        {
+            case 0x49:
+            case 0x45:
+            case 0x55:
+            case 0x41:
+            case 0x51: return 2;
+            case 0x4d:
+            case 0x5d:
+            case 0x59: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, INC)

@@ -238,7 +238,22 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, EOR)
     {
-
+        int8_t value;
+        switch (opcode())
+        {
+        case 0x49: value = (int8_t)operand(); break;
+        case 0x45: value = __cpu->__ram->operator[]<int8_t>(operand()); break;
+        case 0x55: value = __cpu->__ram->operator[]<int8_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0x4d: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
+        case 0x5d: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
+        case 0x59: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__y_register); break;
+        case 0x41: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0x51: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->__accumulator = (int16_t)__cpu->__accumulator ^ value;
+        __cpu->setFlags(Z_FLAG, !__cpu->__accumulator);
+        __cpu->setFlags(N_FLAG, __cpu->__accumulator & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, INC)
@@ -389,13 +404,9 @@ namespace vm
         case 0x11: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
         default: assert("Mustn't reach the statement");
         }
-        __cpu->__accumulator |= value;
-        if((int8_t)__cpu->__accumulator == 0)
-            __cpu->setFlags(Z_FLAG & ~N_FLAG);
-        else if((int8_t)__cpu->__accumulator < 0)
-            __cpu->setFlags(~Z_FLAG & N_FLAG);
-        else
-            __cpu->unsetFlags(Z_FLAG | N_FLAG);
+        __cpu->__accumulator = (int16_t)__cpu->__accumulator | value;
+        __cpu->setFlags(Z_FLAG, !__cpu->__accumulator);
+        __cpu->setFlags(N_FLAG, __cpu->__accumulator & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, PHA)

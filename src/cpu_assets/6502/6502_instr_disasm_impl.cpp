@@ -196,7 +196,19 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, EOR)
     {
-
+        std::string command("eor ");
+        switch (opcode())
+        {
+        case 0x49: return command + "#$" + uint8_to_hex(operand());
+        case 0x45: return command + '$' + uint8_to_hex(operand());
+        case 0x55: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0x4d: return command + '$' + uint16_to_hex(operand16());
+        case 0x5d: return command + '$' + uint16_to_hex(operand16()) + ", x";
+        case 0x59: return command + '$' + uint16_to_hex(operand16()) + ", y";
+        case 0x41: return command + "($" + uint8_to_hex(operand()) + ", x)";
+        case 0x51: return command + "($" + uint8_to_hex(operand()) + "), Y";
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, INC)
