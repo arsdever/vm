@@ -132,7 +132,19 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CMP)
     {
-
+        std::string command("cmp ");
+        switch (opcode())
+        {
+        case 0x29: return command + "#$" + uint8_to_hex(operand());
+        case 0x25: return command + '$' + uint8_to_hex(operand());
+        case 0x35: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0x2d: return command + '$' + uint16_to_hex(operand16());
+        case 0x3d: return command + '$' + uint16_to_hex(operand16()) + ", x";
+        case 0x39: return command + '$' + uint16_to_hex(operand16()) + ", y";
+        case 0x21: return command + "($" + uint8_to_hex(operand()) + ", x)";
+        case 0x31: return command + "($" + uint8_to_hex(operand()) + "), Y";
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, CPX)

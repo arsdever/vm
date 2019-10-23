@@ -114,7 +114,18 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, CMP)
     {
-
+        switch (opcode())
+        {
+            case 0xc9: return 2;
+            case 0xc5: return 3;
+            case 0xd5:
+            case 0xcd:
+            case 0xdd:
+            case 0xd9: return 4;
+            case 0xc1: return 6;
+            case 0xd1: return 5;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, CPX)

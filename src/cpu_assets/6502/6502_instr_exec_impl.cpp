@@ -158,7 +158,22 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, CMP)
     {
-
+        int8_t value;
+        switch (opcode())
+        {
+        case 0xc9: value = (int8_t)operand(); break;
+        case 0xc5: value = __cpu->__ram->operator[]<int8_t>(operand()); break;
+        case 0xd5: value = __cpu->__ram->operator[]<int8_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0xcd: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
+        case 0xdd: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
+        case 0xd9: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__y_register); break;
+        case 0xc1: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0xd1: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        __cpu->setFlags(C_FLAG, __cpu->__accumulator >= value);
+        __cpu->setFlags(Z_FLAG, __cpu->__accumulator == value);
+        __cpu->setFlags(N_FLAG, __cpu->__accumulator < value);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, CPX)
