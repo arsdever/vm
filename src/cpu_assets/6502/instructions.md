@@ -353,7 +353,7 @@ Jump to New Location
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
 | absolute   | JMP oper  | 4C  |   3   |   3   |
-    indirect      JMP (oper)    6C    3     5
+| indirect   | JMP (oper)| 6C  |   3   |   5   |
 
 ## JSR
 
