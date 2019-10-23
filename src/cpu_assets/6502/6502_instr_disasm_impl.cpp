@@ -173,7 +173,15 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, DEC)
     {
-
+        std::string command("cpx ");
+        switch (opcode())
+        {
+        case 0xc6: return command + "$" + uint8_to_hex(operand());
+        case 0xd6: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0xce: return command + '$' + uint16_to_hex(operand16());
+        case 0xde: return command + '$' + uint16_to_hex(operand16()) + ", x";
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, DEX)
@@ -193,7 +201,15 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, INC)
     {
-
+        std::string command("cpx ");
+        switch (opcode())
+        {
+        case 0xe6: return command + "$" + uint8_to_hex(operand());
+        case 0xf6: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0xee: return command + '$' + uint16_to_hex(operand16());
+        case 0xfe: return command + '$' + uint16_to_hex(operand16()) + ", x";
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, INX)

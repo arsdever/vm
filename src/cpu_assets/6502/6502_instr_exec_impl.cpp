@@ -208,7 +208,18 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, DEC)
     {
-
+        int8_t* value;
+        switch (opcode())
+        {
+        case 0xc6: value = &__cpu->__ram->operator[]<int8_t>(operand()); break;
+        case 0xd6: value = &__cpu->__ram->operator[]<int8_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0xce: value = &__cpu->__ram->operator[]<int8_t>(operand16()); break;
+        case 0xde: value = &__cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        --*value;
+        __cpu->setFlags(Z_FLAG, !(*value));
+        __cpu->setFlags(N_FLAG, *value & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, DEX)
@@ -228,7 +239,18 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, INC)
     {
-
+        int8_t* value;
+        switch (opcode())
+        {
+        case 0xe6: value = &__cpu->__ram->operator[]<int8_t>(operand()); break;
+        case 0xf6: value = &__cpu->__ram->operator[]<int8_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff); break;
+        case 0xee: value = &__cpu->__ram->operator[]<int8_t>(operand16()); break;
+        case 0xfe: value = &__cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
+        default: assert("Mustn't reach the statement");
+        }
+        ++*value;
+        __cpu->setFlags(Z_FLAG, !(*value));
+        __cpu->setFlags(N_FLAG, *value & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, INX)

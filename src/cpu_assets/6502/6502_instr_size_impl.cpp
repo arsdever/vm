@@ -152,7 +152,14 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, DEC)
     {
-
+        switch (opcode())
+        {
+            case 0xc6: return 5;
+            case 0xd6: return 6;
+            case 0xce: return 6;
+            case 0xde: return 7;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, DEX)
@@ -172,7 +179,14 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, INC)
     {
-
+        switch (opcode())
+        {
+            case 0xe6: return 5;
+            case 0xf6: return 6;
+            case 0xee: return 6;
+            case 0xfe: return 7;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, INX)

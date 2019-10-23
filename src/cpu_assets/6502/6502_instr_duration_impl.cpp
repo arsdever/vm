@@ -152,7 +152,14 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, DEC)
     {
-
+        switch (opcode())
+        {
+            case 0xc6:
+            case 0xd6: return 2;
+            case 0xce:
+            case 0xde: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, DEX)
@@ -172,7 +179,14 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, INC)
     {
-
+        switch (opcode())
+        {
+            case 0xe6:
+            case 0xf6: return 2;
+            case 0xee:
+            case 0xfe: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, INX)
