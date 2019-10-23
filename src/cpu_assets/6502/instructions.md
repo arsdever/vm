@@ -214,7 +214,7 @@ Clear Overflow Flag
 Compare Memory with Accumulator
 
     A - M                            N Z C I D V
-                                   + + + - - -
+                                     + + + - - -
 
 | addressing | assembler | opc | bytes | cyles |
 |:-----------|----------:|:----|:-----:|:-----:|
