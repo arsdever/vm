@@ -11,4 +11,4 @@ jobs:
     - name: "Building the libraries"
       run: make
     - name: "Running tests"
-      run: make test
+      run: make test TESTS="6502"
