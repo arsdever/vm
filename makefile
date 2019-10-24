@@ -7,7 +7,7 @@ export TEST_BUILD_DIR := $(TEST_DIR)/build
 export INCLUDES := -I$(SRC_DIR)
 export LIB_LIST := cpu_assets
 export RMCMD := rm -fr
-export CXXFLAGS = -g -std=c++14 -lgcov -fprofile-arcs -ftest-coverage -fPIC -DDEBUGGING $(INCLUDES) $(LIBSDIR)
+export CXXFLAGS = -g -std=c++14 -lgcov -fprofile-arcs -ftest-coverage -fPIC -DDEBUGGING $(INCLUDES) -L$(LIB_DIR)
 export CPP := $(CXX)
 export CPPFLAGS := $(CXXFLAGS)
 
@@ -21,13 +21,13 @@ export GET_INCLUDES = $(CXX) $(INC_DEP_FLAG) $(CXXFLAGS)
 
 $(LIB_LIST) build run: create_folders
 	cd $(SRC_DIR); $(MAKE) $(MAKECMDGOALS)
+	cd $(TEST_DIR); $(MAKE) $(MAKECMDGOALS)
 
 clean:
 	cd $(SRC_DIR); $(MAKE) $(MAKECMDGOALS)
 	cd $(TEST_DIR); $(MAKE) $(MAKECMDGOALS)
 
 test:
-	$(MAKE) $(LIB_LIST)
 	cd $(TEST_DIR); $(MAKE) $(MAKECMDGOALS)
 
 rebuild:
