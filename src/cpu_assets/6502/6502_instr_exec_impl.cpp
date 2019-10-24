@@ -552,31 +552,41 @@ namespace vm
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, TAX)
     {
-
+        __cpu->__x_register = __cpu->__accumulator;
+        __cpu->setFlags(Z_FLAG, !__cpu->__x_register);
+        __cpu->setFlags(Z_FLAG, __cpu->__x_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, TAY)
     {
-
+        __cpu->__y_register = __cpu->__accumulator;
+        __cpu->setFlags(Z_FLAG, !__cpu->__y_register);
+        __cpu->setFlags(Z_FLAG, __cpu->__y_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, TSX)
     {
-
+        __cpu->__x_register = __cpu->__stack_pointer;
+        __cpu->setFlags(Z_FLAG, !__cpu->__x_register);
+        __cpu->setFlags(Z_FLAG, __cpu->__x_register & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, TXA)
     {
-
+        __cpu->__accumulator = __cpu->__x_register;
+        __cpu->setFlags(Z_FLAG, !__cpu->__accumulator);
+        __cpu->setFlags(Z_FLAG, __cpu->__accumulator & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, TXS)
     {
-
+        __cpu->__stack_pointer = __cpu->__x_register;
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, TYA)
     {
-
+        __cpu->__accumulator = __cpu->__y_register;
+        __cpu->setFlags(Z_FLAG, !__cpu->__accumulator);
+        __cpu->setFlags(Z_FLAG, __cpu->__accumulator & 0x80);
     }
 }

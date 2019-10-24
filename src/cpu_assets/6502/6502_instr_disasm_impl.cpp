@@ -451,31 +451,31 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, TAX)
     {
-
+        return "tax";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, TAY)
     {
-
+        return "tay";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, TSX)
     {
-
+        return "tsx";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, TXA)
     {
-
+        return "txa";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, TXS)
     {
-
+        return "txs";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, TYA)
     {
-
+        return "tya";
     }
 }

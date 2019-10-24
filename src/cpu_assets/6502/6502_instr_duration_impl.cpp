@@ -416,31 +416,31 @@ namespace vm
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, TAX)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, TAY)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, TSX)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, TXA)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, TXS)
     {
-
+        return 2;
     }
 
     DEFINE_INSTRUCTION_DURATION(CPU6502, TYA)
     {
-
+        return 2;
     }
 }

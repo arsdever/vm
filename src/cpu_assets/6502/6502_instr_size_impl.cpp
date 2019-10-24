@@ -411,31 +411,31 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, TAX)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, TAY)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, TSX)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, TXA)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, TXS)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, TYA)
     {
-
+        return 1;
     }
 }
