@@ -35,7 +35,7 @@ namespace vm
         case 0x3d: return command + '$' + uint16_to_hex(operand16()) + ", x";
         case 0x39: return command + '$' + uint16_to_hex(operand16()) + ", y";
         case 0x21: return command + "($" + uint8_to_hex(operand()) + ", x)";
-        case 0x31: return command + "($" + uint8_to_hex(operand()) + "), Y";
+        case 0x31: return command + "($" + uint8_to_hex(operand()) + "), y";
         default: assert("Mustn't reach the statement");
         }
     }
@@ -142,7 +142,7 @@ namespace vm
         case 0x3d: return command + '$' + uint16_to_hex(operand16()) + ", x";
         case 0x39: return command + '$' + uint16_to_hex(operand16()) + ", y";
         case 0x21: return command + "($" + uint8_to_hex(operand()) + ", x)";
-        case 0x31: return command + "($" + uint8_to_hex(operand()) + "), Y";
+        case 0x31: return command + "($" + uint8_to_hex(operand()) + "), y";
         default: assert("Mustn't reach the statement");
         }
     }
@@ -206,7 +206,7 @@ namespace vm
         case 0x5d: return command + '$' + uint16_to_hex(operand16()) + ", x";
         case 0x59: return command + '$' + uint16_to_hex(operand16()) + ", y";
         case 0x41: return command + "($" + uint8_to_hex(operand()) + ", x)";
-        case 0x51: return command + "($" + uint8_to_hex(operand()) + "), Y";
+        case 0x51: return command + "($" + uint8_to_hex(operand()) + "), y";
         default: assert("Mustn't reach the statement");
         }
     }
@@ -262,7 +262,7 @@ namespace vm
         case 0xbd: return command + '$' + uint16_to_hex(operand16()) + ", x";
         case 0xb9: return command + '$' + uint16_to_hex(operand16()) + ", y";
         case 0xa1: return command + "($" + uint8_to_hex(operand()) + ", x)";
-        case 0xb1: return command + "($" + uint8_to_hex(operand()) + "), Y";
+        case 0xb1: return command + "($" + uint8_to_hex(operand()) + "), y";
         default: assert("Mustn't reach the statement");
         }
     }
@@ -326,7 +326,7 @@ namespace vm
         case 0x1d: return command + '$' + uint16_to_hex(operand16());
         case 0x19: return command + '$' + uint16_to_hex(operand16());
         case 0x01: return command + "($" + uint8_to_hex(operand()) + ", x)";
-        case 0x11: return command + "($" + uint8_to_hex(operand()) + "), Y";
+        case 0x11: return command + "($" + uint8_to_hex(operand()) + "), y";
         default: assert("Mustn't reach the statement");
         }
     }
@@ -386,7 +386,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, RTS)
     {
-
+        return "rts";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, SBC)
@@ -396,32 +396,57 @@ namespace vm
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, SEC)
     {
-
+        return "sec";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, SED)
     {
-
+        return "sed";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, SEI)
     {
-
+        return "sei";
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, STA)
     {
-
+        std::string command("sta ");
+        switch (opcode())
+        {
+        case 0x85: return command + '$' + uint8_to_hex(operand());
+        case 0x95: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0x8d: return command + '$' + uint16_to_hex(operand16());
+        case 0x9d: return command + '$' + uint16_to_hex(operand16()) + ", x";
+        case 0x99: return command + '$' + uint16_to_hex(operand16()) + ", y";
+        case 0x81: return command + "($" + uint8_to_hex(operand()) + ", x)";
+        case 0x91: return command + "($" + uint8_to_hex(operand()) + "), y";
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, STX)
     {
-
+        std::string command("stx ");
+        switch (opcode())
+        {
+        case 0x86: return command + '$' + uint8_to_hex(operand());
+        case 0x96: return command + '$' + uint8_to_hex(operand()) + ", y";
+        case 0x8e: return command + '$' + uint16_to_hex(operand16());
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, STY)
     {
-
+        std::string command("sty ");
+        switch (opcode())
+        {
+        case 0x84: return command + '$' + uint8_to_hex(operand());
+        case 0x94: return command + '$' + uint8_to_hex(operand()) + ", x";
+        case 0x8c: return command + '$' + uint16_to_hex(operand16());
+        default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_DISASSEMBLER(CPU6502, TAX)

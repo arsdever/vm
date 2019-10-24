@@ -349,7 +349,7 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, RTS)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, SBC)
@@ -359,32 +359,54 @@ namespace vm
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, SEC)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, SED)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, SEI)
     {
-
+        return 1;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, STA)
     {
-
+        switch (opcode())
+        {
+            case 0x85:
+            case 0x95: return 2;
+            case 0x8d:
+            case 0x9d:
+            case 0x99: return 3;
+            case 0x81:
+            case 0x91: return 2;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, STX)
     {
-
+        switch (opcode())
+        {
+            case 0x86:
+            case 0x96: return 2;
+            case 0x8e: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, STY)
     {
-
+        switch (opcode())
+        {
+            case 0x84:
+            case 0x94: return 2;
+            case 0x8c: return 3;
+            default: assert("Mustn't reach the statement");
+        }
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, TAX)
