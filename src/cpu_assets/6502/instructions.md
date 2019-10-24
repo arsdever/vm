@@ -695,7 +695,7 @@ Transfer Index X to Accumulator
 
 ## TXS
 
-Transfer Index X to Stack Register
+Transfer Index X to Stack Pointer
 
     X -> SP                          N Z C I D V
                                      - - - - - -
