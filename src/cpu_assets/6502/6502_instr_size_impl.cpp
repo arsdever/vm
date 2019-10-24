@@ -22,6 +22,7 @@ namespace vm
             case 0x31: return 2;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ASL)
@@ -35,6 +36,7 @@ namespace vm
             case 0x1e: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, BCC)
@@ -60,6 +62,7 @@ namespace vm
         case 0x2c: return 3;
         default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, BMI)
@@ -126,6 +129,7 @@ namespace vm
             case 0xd1: return 2;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, CPX)
@@ -137,6 +141,7 @@ namespace vm
             case 0xec: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, CPY)
@@ -148,6 +153,7 @@ namespace vm
             case 0xcc: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, DEC)
@@ -160,6 +166,7 @@ namespace vm
             case 0xde: return 7;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, DEX)
@@ -186,6 +193,7 @@ namespace vm
             case 0x59: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, INC)
@@ -198,6 +206,7 @@ namespace vm
             case 0xfe: return 7;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, INX)
@@ -234,6 +243,7 @@ namespace vm
             case 0xb1: return 2;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, LDX)
@@ -247,6 +257,7 @@ namespace vm
             case 0xbe: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, LDY)
@@ -260,6 +271,7 @@ namespace vm
             case 0xbc: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, LSR)
@@ -273,6 +285,7 @@ namespace vm
             case 0x5e: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, NOP)
@@ -294,6 +307,7 @@ namespace vm
             case 0x19: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, PHA)
@@ -327,6 +341,7 @@ namespace vm
             case 0x3e: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, ROR)
@@ -340,6 +355,7 @@ namespace vm
             case 0x7e: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, RTI)
@@ -385,6 +401,7 @@ namespace vm
             case 0x91: return 2;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, STX)
@@ -396,6 +413,7 @@ namespace vm
             case 0x8e: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, STY)
@@ -407,6 +425,7 @@ namespace vm
             case 0x8c: return 3;
             default: assert("Mustn't reach the statement");
         }
+        return 0;
     }
 
     DEFINE_INSTRUCTION_SIZE(CPU6502, TAX)
