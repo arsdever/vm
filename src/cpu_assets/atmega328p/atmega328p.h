@@ -132,6 +132,7 @@ namespace vm
         void* getRegister(unsigned char reg_number) const override;
         AbstractInstructionSet* getInstructionSet() const override;
         bool start(bool debug = false) override;
+        void reset() override;
         bool isRunning() const override;
         std::string disassemble() const override;
         int tick() override;

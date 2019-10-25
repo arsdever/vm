@@ -75,6 +75,11 @@ namespace vm
         return true;
     }
 
+    void CPU6502::reset()
+    {
+        __program_counter = 0x0000;
+    }
+
     int CPU6502::tick()
     {
         if(!isRunning())

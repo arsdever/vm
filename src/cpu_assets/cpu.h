@@ -10,6 +10,7 @@ namespace vm
     {
     public:
         virtual bool start(bool debug = false) = 0;
+        virtual void reset() = 0;
         virtual bool isRunning() const = 0;
         virtual int tick() = 0;
         virtual RAM* ram() const = 0;

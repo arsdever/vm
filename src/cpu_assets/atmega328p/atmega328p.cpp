@@ -77,6 +77,11 @@ namespace vm
         return true;
     }
 
+    void ATmega328P::reset()
+    {
+        __program_counter = 0x0000;
+    }
+
     int ATmega328P::tick()
     {
         if(!isRunning())
