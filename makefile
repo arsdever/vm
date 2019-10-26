@@ -17,9 +17,9 @@ export COMPILE_LIB = $(CXX) -shared $(CXXFLAGS) $(LIBS)
 export COMPILE_OBJECT = $(CXX) -c $(CXXFLAGS) $(LIBS)
 export GET_INCLUDES = $(CXX) $(INC_DEP_FLAG) $(CXXFLAGS)
 
-.PHONY : build rebuild run clean test create_folders
+.PHONY : build rebuild clean test create_folders
 
-$(LIB_LIST) build run: create_folders
+$(LIB_LIST) build: create_folders
 	cd $(SRC_DIR); $(MAKE) $(MAKECMDGOALS)
 	cd $(TEST_DIR); $(MAKE) $(MAKECMDGOALS)
 

@@ -165,6 +165,19 @@ namespace vm
         uint8_t __stack_pointer;
         uint8_t __skip_ticks;
         AbstractInstructionSet::executor_t *__executor;
+
+#ifdef TEST
+    public:
+        AbstractInstructionSet *& instruction_set() { return __instruction_set; }
+        uint16_t& program_counter() {return __program_counter; }
+        uint8_t& accumulator() {return __accumulator; }
+        uint8_t& x_register() {return __x_register; }
+        uint8_t& y_register() {return __y_register; }
+        uint8_t& flags() {return __flags; }
+        uint8_t& stack_pointer() {return __stack_pointer; }
+        uint8_t& skip_ticks() {return __skip_ticks; }
+        AbstractInstructionSet::executor_t *& executor() { return __executor; }
+#endif
     };
 
     inline void CPU6502::setFlags(uint8_t flags, bool state)
