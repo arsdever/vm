@@ -715,9 +715,9 @@ Transfer Index Y to Accumulator
 |:-----------|----------:|:----|:-----:|:-----:|
 | implied    | TYA       | 98  |   1   |   2   |
 
-> \*  add 1 to cycles if page boundery is crossed  
-> \*\* add 1 to cycles if branch occurs on same page  
-> \*\* add 2 to cycles if branch occurs to different pag  
+> + \*  add 1 to cycles if page boundery is crossed
+> + \*\* add 1 to cycles if branch occurs on same page
+> + \*\* add 2 to cycles if branch occurs to different pag  
 
 ### Legend to Flags
 
