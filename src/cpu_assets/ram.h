@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <initializer_list>
 
 namespace vm
 {
@@ -11,7 +12,7 @@ namespace vm
         typedef int pos_t;
 
     public:
-        RAM(size_t size) : __buffer(new uint8_t[size]{ 0 }) {}
+        RAM(size_t size) : __size(size), __buffer(new uint8_t[size]{ 0 }) {}
         ~RAM() { delete[] __buffer; }
 
         template <typename VALUE_TYPE = uint8_t>
@@ -20,30 +21,20 @@ namespace vm
         template <typename VALUE_TYPE = uint8_t>
         VALUE_TYPE const& operator[] (pos_t pos) const { return (VALUE_TYPE&)__buffer[pos]; }
 
-        template <typename VALUE_TYPE = uint8_t>
-        inline VALUE_TYPE readDataLSB(pos_t pos)
+        RAM& operator = (std::initializer_list<uint8_t> const& list)
         {
-            VALUE_TYPE result = 0;
-            for(int i = 0; i < sizeof(VALUE_TYPE); ++i)
+            delete[] __buffer;
+            __buffer = new uint8_t[__size] { 0 };
+            int i = 0;
+            for (uint8_t n : list)
             {
-                result <<= 8;
-                result &= ~0xff;
-                result |= __buffer[pos + i];
+                __buffer[i++] = n;
             }
-            return result;
-        }
-
-        template <typename VALUE_TYPE = uint8_t>
-        inline void writeDataLSB(pos_t pos, VALUE_TYPE data)
-        {
-            for(int i = sizeof(VALUE_TYPE) - 1; i >= 0; ++i)
-            {
-                __buffer[pos + i] = data & 0xff;
-                data >>= 8;
-            }
+            return *this;
         }
 
     private:
         uint8_t *__buffer;
+        uint32_t __size;
     };
 }

@@ -15,8 +15,8 @@ namespace vm
         case 0x6d: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
         case 0x7d: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
         case 0x79: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__y_register); break;
-        case 0x61: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
-        case 0x71: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        case 0x61: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->operator[]<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0x71: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->operator[]<uint16_t>(operand()) + __cpu->__y_register); break;
         default: assert("Mustn't reach the statement");
         }
         int16_t result = (int16_t)__cpu->__accumulator + value + bool(__cpu->__flags & Z_FLAG);
@@ -36,8 +36,8 @@ namespace vm
         case 0x2d: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
         case 0x3d: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
         case 0x39: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__y_register); break;
-        case 0x21: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
-        case 0x31: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        case 0x21: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->operator[]<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0x31: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->operator[]<uint16_t>(operand()) + __cpu->__y_register); break;
         default: assert("Mustn't reach the statement");
         }
         __cpu->__accumulator = (int16_t)__cpu->__accumulator & value;
@@ -167,8 +167,8 @@ namespace vm
         case 0xcd: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
         case 0xdd: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
         case 0xd9: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__y_register); break;
-        case 0xc1: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
-        case 0xd1: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        case 0xc1: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->operator[]<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0xd1: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->operator[]<uint16_t>(operand()) + __cpu->__y_register); break;
         default: assert("Mustn't reach the statement");
         }
         __cpu->setFlags(C_FLAG, __cpu->__accumulator >= value);
@@ -247,8 +247,8 @@ namespace vm
         case 0x4d: value = __cpu->__ram->operator[]<int8_t>(operand16()); break;
         case 0x5d: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__x_register); break;
         case 0x59: value = __cpu->__ram->operator[]<int8_t>(operand16() + __cpu->__y_register); break;
-        case 0x41: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
-        case 0x51: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        case 0x41: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->operator[]<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0x51: value = __cpu->__ram->operator[]<int8_t>(__cpu->__ram->operator[]<uint16_t>(operand()) + __cpu->__y_register); break;
         default: assert("Mustn't reach the statement");
         }
         __cpu->__accumulator = (int16_t)__cpu->__accumulator ^ value;
@@ -320,8 +320,8 @@ namespace vm
         case 0xad: value = __cpu->__ram->operator[](operand16()); break;
         case 0xbd: value = __cpu->__ram->operator[](operand16() + __cpu->__x_register); break;
         case 0xb9: value = __cpu->__ram->operator[](operand16() + __cpu->__y_register); break;
-        case 0xa1: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
-        case 0xb1: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        case 0xa1: value = __cpu->__ram->operator[](__cpu->__ram->operator[]<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0xb1: value = __cpu->__ram->operator[](__cpu->__ram->operator[]<uint16_t>(operand()) + __cpu->__y_register); break;
         default: assert("Mustn't reach the statement");
         }
         __cpu->__accumulator = value;
@@ -400,8 +400,8 @@ namespace vm
         case 0x0d: value = __cpu->__ram->operator[](operand16()); break;
         case 0x1d: value = __cpu->__ram->operator[](operand16() + __cpu->__x_register); break;
         case 0x19: value = __cpu->__ram->operator[](operand16() + __cpu->__y_register); break;
-        case 0x01: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
-        case 0x11: value = __cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        case 0x01: value = __cpu->__ram->operator[](__cpu->__ram->operator[]<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0x11: value = __cpu->__ram->operator[](__cpu->__ram->operator[]<uint16_t>(operand()) + __cpu->__y_register); break;
         default: assert("Mustn't reach the statement");
         }
         __cpu->__accumulator = (int16_t)__cpu->__accumulator | value;
@@ -517,8 +517,8 @@ namespace vm
         case 0x8d: value_p = &__cpu->__ram->operator[](operand16()); break;
         case 0x9d: value_p = &__cpu->__ram->operator[](operand16() + __cpu->__x_register); break;
         case 0x99: value_p = &__cpu->__ram->operator[](operand16() + __cpu->__y_register); break;
-        case 0x81: value_p = &__cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
-        case 0x91: value_p = &__cpu->__ram->operator[](__cpu->__ram->readDataLSB<uint16_t>(operand()) + __cpu->__y_register); break;
+        case 0x81: value_p = &__cpu->__ram->operator[](__cpu->__ram->operator[]<uint16_t>(((uint16_t)operand() + __cpu->__x_register) & 0xff)); break;
+        case 0x91: value_p = &__cpu->__ram->operator[](__cpu->__ram->operator[]<uint16_t>(operand()) + __cpu->__y_register); break;
         default: assert("Mustn't reach the statement");
         }
         *value_p = __cpu->__accumulator;
