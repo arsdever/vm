@@ -9,6 +9,6 @@ jobs:
     - name: "Getting the sources"
       uses: actions/checkout@master
     - name: "Building the libraries"
-      run: make
+      run: make -j8
     - name: "Running tests"
       run: make test TESTS="6502"
