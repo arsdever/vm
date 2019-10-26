@@ -156,7 +156,7 @@ namespace vm
 
     private:
         AbstractInstructionSet *__instruction_set;
-        int16_t __program_counter;
+        uint16_t __program_counter;
         uint8_t __accumulator;
         uint8_t __x_register;
         uint8_t __y_register;
