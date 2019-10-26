@@ -5,6 +5,14 @@
 
 namespace vm
 {
+    /**
+     * @brief This is a simple RAM implementation.
+     * 
+     * @details It is used by CPU for instruction fetching, stack manipulations and other stuff.
+     * 
+     * @see RAM
+     * @author [arsdever](https://github.com/arsdever)
+     */
     class RAM
     {
     public:
