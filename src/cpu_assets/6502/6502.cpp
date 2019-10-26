@@ -80,6 +80,11 @@ namespace vm
         __program_counter = 0x0000;
     }
 
+    void CPU6502::stop()
+    {
+        __is_running = false;
+    }
+
     int CPU6502::tick()
     {
         if(!isRunning())

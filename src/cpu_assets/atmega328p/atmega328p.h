@@ -133,6 +133,7 @@ namespace vm
         AbstractInstructionSet* getInstructionSet() const override;
         bool start(bool debug = false) override;
         void reset() override;
+        void stop() override;
         bool isRunning() const override;
         std::string disassemble() const override;
         int tick() override;
