@@ -63,7 +63,7 @@ namespace vm
         }
         __cpu->setFlags(C_FLAG, __cpu->__ram->operator[](address) & 0x80);
         __cpu->setFlags(Z_FLAG, !(__cpu->__ram->operator[](address) <<= 1));
-        __cpu->setFlags(N_FLAG, __cpu->__ram->operator[](address) & 0x01);
+        __cpu->setFlags(N_FLAG, __cpu->__ram->operator[](address) & 0x80);
     }
 
     DEFINE_INSTRUCTION_FETCHER_AND_EXECUTOR(CPU6502, BCC)

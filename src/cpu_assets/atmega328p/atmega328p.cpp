@@ -80,6 +80,11 @@ namespace vm
     void ATmega328P::reset()
     {
         __program_counter = 0x0000;
+        __flags = 0x20;
+        __accumulator = 0x00;
+        __x_register = 0x00;
+        __y_register = 0x00;
+        __stack_pointer = 0xff;
     }
 
     void ATmega328P::stop()
