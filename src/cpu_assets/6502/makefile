@@ -1,6 +1,6 @@
 SOURCES := $(wildcard *.cpp)
 HEADERS := $(wildcard *.h)
-OBJECTS := $(SOURCES:%.cpp=../%.o)
+OBJECTS := $(SOURCES:%.cpp=%.o)
 
 .PHONY : build clean
 build : $(OBJECTS)
@@ -10,7 +10,7 @@ clean :
 	$(RMCMD) *.gcno
 	$(RMCMD) *.gcda
 
-$(OBJECTS) : ../%.o : %.cpp %.mk
+$(OBJECTS) : %.o : %.cpp %.mk
 	$(COMPILE_OBJECT) -o $@ $<
 
 %.mk : %.cpp
