@@ -54,7 +54,62 @@ TEST_CASE("Testing instructions", "[instructions]")
 
     SECTION("Testing instruction ASL")
     {
+        ram = {
+            0xa9, 0x3c, 0x0a, 0x06, 0x00, 0xa6, 0x00, 0xa2,
+            0x02, 0x16, 0x01, 0xa6, 0x03, 0x0e, 0x00, 0x00,
+            0xa6, 0x00, 0xa2, 0x02, 0x1e, 0x01, 0x00, 0xa6,
+            0x03, 0xa9, 0x01, 0x0a, 0x0a, 0x0a, 0x0a, 0x0a,
+            0x0a, 0x0a, 0x0a
+            };
+        cpu.reset();
+        cpu.start();
+        REQUIRE(cpu.isRunning());
+        //               PC    ACC  XREG  YREG   SR    SP   CLOCK
+        CHECK_CPU_STATE(0x00, 0x00, 0x00, 0x00, 0x20, 0xff, 0); // initial
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x02, 0x3c, 0x00, 0x00, 0x20, 0xff, 2); // a9 3c        -> lda #$3c     | 2 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x03, 0x78, 0x00, 0x00, 0x20, 0xff, 4); // 0a           -> asl A        | 1 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x05, 0x78, 0x00, 0x00, 0x21, 0xff, 9); // 06 00        -> asl $00      | 2 | 5 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x07, 0x78, 0x52, 0x00, 0x21, 0xff, 12); // a6 00       -> ldx $00      | 2 | 3 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x09, 0x78, 0x02, 0x00, 0x21, 0xff, 14); // a2 02       -> ldx #$02     | 2 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x0b, 0x78, 0x02, 0x00, 0x20, 0xff, 20); // 16 01       -> asl $01, x   | 2 | 6 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x0d, 0x78, 0x0c, 0x00, 0x20, 0xff, 23); // a6 03       -> ldx $03      | 2 | 3 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x10, 0x78, 0x0c, 0x00, 0xa0, 0xff, 29); // 0e 00 00    -> asl $0000    | 3 | 6 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x12, 0x78, 0xa4, 0x00, 0xa0, 0xff, 32); // a6 00       -> ldx $01      | 2 | 3 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x14, 0x78, 0x02, 0x00, 0x20, 0xff, 34); // a2 02       -> ldx #$02     | 2 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x17, 0x78, 0x02, 0x00, 0x20, 0xff, 41); // 1e 01 00    -> asl $0001, x | 3 | 7 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x19, 0x78, 0x18, 0x00, 0x20, 0xff, 44); // a6 03       -> ldx $03      | 2 | 3 |
 
+
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x1b, 0x01, 0x18, 0x00, 0x20, 0xff, 46); // a9 01       -> lda #$01     | 2 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x1c, 0x02, 0x18, 0x00, 0x20, 0xff, 48); // 0a          -> asl A        | 1 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x1d, 0x04, 0x18, 0x00, 0x20, 0xff, 50); // 0a          -> asl A        | 1 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x1e, 0x08, 0x18, 0x00, 0x20, 0xff, 52); // 0a          -> asl A        | 1 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x1f, 0x10, 0x18, 0x00, 0x20, 0xff, 54); // 0a          -> asl A        | 1 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x20, 0x20, 0x18, 0x00, 0x20, 0xff, 56); // 0a          -> asl A        | 1 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x21, 0x40, 0x18, 0x00, 0x20, 0xff, 58); // 0a          -> asl A        | 1 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x22, 0x80, 0x18, 0x00, 0x20, 0xff, 60); // 0a          -> asl A        | 1 | 2 |
+        clocks += executeUntilNextInstruction(cpu);
+        CHECK_CPU_STATE(0x23, 0x00, 0x18, 0x00, 0x23, 0xff, 62); // 0a          -> asl A        | 1 | 2 |
     }
 
     SECTION("Testing instruction BCC")
@@ -357,50 +412,3 @@ TEST_CASE("Testing instructions", "[instructions]")
 
     }
 }
-
-/*
-int main()
-{
-    vm::RAM ram(0x7fff);
-    vm::CPU6502 cpu(&ram);
-    std::ifstream ramfile;
-    ramfile.open("ram_model.ram", std::ios::binary | std::ios::in);
-    if(!ramfile.is_open())
-    {
-        std::cerr << "Cannot load RAM model: Cannot open file ram_model.ram." << std::endl;
-        return 1;
-    }
-    
-    int i = 0;
-    while(!ramfile.eof())
-    {
-        if(i >= 0x8000)
-        {
-            std::cerr << "Cannot load RAM model: Model size is bigger than the RAM is." << std::endl;
-            return 1;            
-        }
-        ramfile >> ram[i++];
-    }
-
-    cpu.start();
-    std::cout << "Initial state" << std::endl;
-    std::cout << cpu.dump() << std::endl;
-    int clocks = 0;
-    while(cpu.isRunning())
-    {
-        std::cout << cpu.disassemble() << std::endl;
-        int skip = cpu.tick();
-        std::cout << "Expression takes " << skip << " clocks. Skipping" << std::flush;
-        while (skip > 0)
-        {
-            ++clocks;
-            std::cout << ' ' << skip << std::flush;
-            skip = cpu.tick();
-        }
-        std::cout << std::endl << cpu.dump() << std::endl;
-        std::cout << "--- CLOCK TICKS " << clocks << " ---" << std::endl;
-    }
-       
-    return 0;
-}
-*/
